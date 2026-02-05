@@ -423,7 +423,15 @@ AAAAAAAAAACTGCTACTAACACGTACTACTG
 
 <h3 id="rotate-by-oligonucleotide">Rotate by oligonucleotide</h3>
 
-<p>:warning: rotation by oligo will only produce an output if the match is unique</p>
+<div class="admonition admonition-warning">
+  <div class="admonition-heading">
+    <span class="admonition-icon">⚠️</span>
+    <span class="admonition-title">Warning</span>
+  </div>
+  <div class="admonition-content">
+<p>rotation by oligo will only produce an output if the match is unique</p>
+  </div>
+</div>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu rotate <span class="nt">-m</span> AAAAAAAAAA data/homopolymer.fa
 </code></pre></div></div>

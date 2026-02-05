@@ -407,8 +407,17 @@ In SeqFu 2.0 a strict behaviour will be used by default, see **fu-pecheck** and 
 
 <h3 id="integrity-check">Integrity check</h3>
 
-<p>:warning: If not using <code class="language-plaintext highlighter-rouge">--deep</code>, the file is considered valid if <code class="language-plaintext highlighter-rouge">seqfu cat $INPUT &gt; $OUTPUT</code> would produce a valid file (i.e. if an error is detected at the 100-th sequence, the file
+<div class="admonition admonition-warning">
+  <div class="admonition-heading">
+    <span class="admonition-icon">⚠️</span>
+    <span class="admonition-title">Warning</span>
+  </div>
+  <div class="admonition-content">
+<p>If not using <code>--deep</code>, the file is considered valid until the first error:
+if <code>seqfu cat $INPUT &gt; $OUTPUT</code> would produce a valid file (i.e. if an error is detected at the 100-th sequence, the file
 would be considered valid reporting 99 as total sequences)</p>
+  </div>
+</div>
 
 <p>A single FASTQ file is considered valid if:</p>
 
