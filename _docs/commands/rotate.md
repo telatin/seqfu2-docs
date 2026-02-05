@@ -57,7 +57,9 @@ AAAAAAAAAACTGCTACTAACACGTACTACTG
 
 ### Rotate by oligonucleotide
 
-:warning: rotation by oligo will only produce an output if the match is unique
+:::warning
+rotation by oligo will only produce an output if the match is unique
+:::
 
 ```bash
 seqfu rotate -m AAAAAAAAAA data/homopolymer.fa

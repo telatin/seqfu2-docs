@@ -100,8 +100,10 @@ both available from bioconda.
 We used a Linux Virtual Machine running Ubuntu 18.04, with 8 cores and 64 Gb of RAM for the test,
 with Miniconda (4.9.2) to install the required tools.
 
-:warning: SeqKit, by default, omits N50 calculation, that is a core feature (always enabled) in SeqFu.
+:::warning
+SeqKit, by default, omits N50 calculation, that is a core feature (always enabled) in SeqFu.
 The correct comparison is thus between `seqfu stats` and `seqkit stats --all`.
+:::
 
 Speed evaluate with 
 [hyperfine](https://github.com/sharkdp/hyperfine), 

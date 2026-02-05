@@ -38,8 +38,11 @@ Usage: seqfu check [options] <FQFILE> [<REV>]
 
 ### Integrity check
 
-:warning: If not using `--deep`, the file is considered valid if `seqfu cat $INPUT > $OUTPUT` would produce a valid file (i.e. if an error is detected at the 100-th sequence, the file
+:::warning
+If not using `--deep`, the file is considered valid until the first error:
+if `seqfu cat $INPUT > $OUTPUT` would produce a valid file (i.e. if an error is detected at the 100-th sequence, the file
 would be considered valid reporting 99 as total sequences)
+:::
 
 A single FASTQ file is considered valid if:
   
