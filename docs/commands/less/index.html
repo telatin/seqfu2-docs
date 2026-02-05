@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>seqfu less | SeqFu 2.0</title>
+  <meta name="description" content="Interactive pager for browsing FASTA/FASTQ files">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="icon" href="../../assets/img/fusion-icon.svg" type="image/svg+xml">
+  <script>
+    / Apply saved theme before page renders to avoid flash
+    (function() {
+      var theme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+  <div class="header-inner">
+    <a href="../../" class="header-logo">
+      <img src="../../assets/img/logo-fusion.svg" alt="Fusion" class="logo-img">
+      <span class="logo-text">SeqFu 2.0 - the FASTX swiss-army knife</span>
+    </a>
+    <div class="header-actions">
+      <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <div class="doc-layout">
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+    <nav class="sidebar-nav" aria-label="Documentation navigation">
+  <ul class="sidebar-list">
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../" class="sidebar-link">SeqFu 2.0</a>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../get-started/" class="sidebar-link">Get started</a>
+        </li>
+      
+    
+      
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-category expanded">
+          
+            <button class="sidebar-category-btn" aria-expanded="true">
+              <span>Commands</span>
+              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          
+          <ul class="sidebar-subitems">
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/bases/" class="sidebar-link">seqfu bases</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/cat/" class="sidebar-link">seqfu cat</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/check/" class="sidebar-link">seqfu check</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/count/" class="sidebar-link">seqfu count</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/deinterleave/" class="sidebar-link">seqfu deinterleave</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/derep/" class="sidebar-link">seqfu derep</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/grep/" class="sidebar-link">seqfu grep</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/head/" class="sidebar-link">seqfu head</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/interleave/" class="sidebar-link">seqfu interleave</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/lanes/" class="sidebar-link">seqfu lanes</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item active">
+                  <a href="../../commands/less/" class="sidebar-link active">seqfu less</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/list/" class="sidebar-link">seqfu list</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/merge/" class="sidebar-link">seqfu merge</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/metadata/" class="sidebar-link">seqfu metadata</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/qual/" class="sidebar-link">seqfu qual</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/rc/" class="sidebar-link">seqfu rc</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/rotate/" class="sidebar-link">seqfu rotate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/sort/" class="sidebar-link">seqfu sort</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/stats/" class="sidebar-link">seqfu stats</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tabulate/" class="sidebar-link">seqfu tabulate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tail/" class="sidebar-link">seqfu tail</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tofasta/" class="sidebar-link">seqfu tofasta</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/trim/" class="sidebar-link">seqfu trim</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/view/" class="sidebar-link">seqfu view</a>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../background/" class="sidebar-link">Background</a>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../reference/" class="sidebar-link">Citation</a>
+        </li>
+      
+    
+      
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-category">
+          
+            <button class="sidebar-category-btn" aria-expanded="false">
+              <span>Tutorials</span>
+              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          
+          <ul class="sidebar-subitems">
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../faq/" class="sidebar-link">FAQ</a>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+  </aside>
+  <main class="doc-main">
+    <div class="doc-content">
+      
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="../../">SeqFu 2.0</a>
+    </li>
+    
+    
+      
+    
+      
+        
+        
+          
+          <li class="breadcrumb-item">
+            <a href="../../commands/">Commands</a>
+          </li>
+        
+      
+    
+      
+        
+        
+          <li class="breadcrumb-item current" aria-current="page">
+            seqfu less
+          </li>
+        
+      
+    
+  </ol>
+</nav>
+
+
+      <article class="markdown-body">
+        <h1>seqfu less</h1>
+        <div class="admonition admonition-caution">
+  <div class="admonition-heading">
+    <span class="admonition-icon">⚠️</span>
+    <span class="admonition-title">Caution</span>
+  </div>
+  <div class="admonition-content">
+<p>this is an experimental utility</p>
+  </div>
+</div>
+
+<p><em>less</em> is an interactive pager for FASTA/FASTQ files, inspired by Unix <code class="language-plaintext highlighter-rouge">less</code>.
+It provides a full-screen terminal interface for browsing sequences with
+colored bases, quality visualization, and oligo search highlighting.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: less [options] &lt;inputfile&gt;
+
+Interactive viewer for FASTA/FASTQ files (like Unix less for sequences).
+
+Navigation:
+  Up/Down, A/Z         Scroll one record up/down
+  PgUp/PgDown          Scroll one page up/down
+  Ctrl+A/Ctrl+Z        Jump 100 records up/down
+  Home/End             Jump to start/end
+  Left/Right           Scroll 1bp horizontally (no-wrap mode)
+  L/K                  Scroll 25bp left/right
+  Ctrl+L/Ctrl+K        Scroll 250bp left/right
+
+Commands:
+  /                    Search pattern (ID, comment, or oligo)
+  :                    Jump to record number
+  n/N                  Next/previous search match
+  S                    Toggle line wrap
+  T                    Cycle theme (Dark/Light/Solarized)
+  R                    Toggle record numbers
+  C                    Toggle compact FASTQ view
+  U                    Toggle quality bars/characters
+  0                    Toggle sequence base coloring
+  H                    Show help
+  Q, Esc               Quit
+
+Options:
+  -S, --no-line-wrap       Disable line wrapping [default: false]
+  -c, --cache-size SIZE    Cache size [default: 1G]
+  -m, --mouse              Enable mouse support
+  -o, --oligo1 OLIGO       Highlight oligo (blue background)
+  -r, --oligo2 OLIGO       Second oligo to highlight (red background)
+  -q, --qual-scale STR     Quality thresholds [default: 3:15:25:28:30:35:40]
+  --match-ths FLOAT        Oligo match threshold [default: 0.75]
+  --min-matches INT        Oligo min matches [default: 5]
+  --max-mismatches INT     Oligo max mismatches [default: 2]
+  --ascii                  Use ASCII quality chars
+  -Q, --qual-chars         Show quality characters instead of bars
+  -n, --nocolor            Disable colors
+  -h, --help               Show this help
+</code></pre></div></div>
+
+<h2 id="comparison-with-seqfu-view">Comparison with seqfu view</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>seqfu view</th>
+      <th>seqfu less</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Output</td>
+      <td>Prints to stdout</td>
+      <td>Interactive TUI</td>
+    </tr>
+    <tr>
+      <td>Navigation</td>
+      <td>Pipe to <code class="language-plaintext highlighter-rouge">less -SR</code></td>
+      <td>Built-in scrolling</td>
+    </tr>
+    <tr>
+      <td>Themes</td>
+      <td>Single style</td>
+      <td>3 themes (Dark/Light/Solarized)</td>
+    </tr>
+    <tr>
+      <td>Search</td>
+      <td>Command-line only</td>
+      <td>Interactive <code class="language-plaintext highlighter-rouge">/</code> search</td>
+    </tr>
+    <tr>
+      <td>Line wrap</td>
+      <td>Terminal dependent</td>
+      <td>Toggle with <code class="language-plaintext highlighter-rouge">S</code> key</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Use <code class="language-plaintext highlighter-rouge">seqfu view</code> when you want to pipe output or process it further.
+Use <code class="language-plaintext highlighter-rouge">seqfu less</code> for interactive exploration of sequence files.</p>
+
+<h2 id="keyboard-navigation">Keyboard Navigation</h2>
+
+<h3 id="vertical-scrolling-records">Vertical Scrolling (Records)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Up</code>, <code class="language-plaintext highlighter-rouge">A</code></td>
+      <td>Scroll up one record</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Down</code>, <code class="language-plaintext highlighter-rouge">Z</code></td>
+      <td>Scroll down one record</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">PgUp</code></td>
+      <td>Scroll up one page</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">PgDown</code></td>
+      <td>Scroll down one page</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+A</code></td>
+      <td>Jump 100 records up</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+Z</code></td>
+      <td>Jump 100 records down</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Home</code></td>
+      <td>Jump to first record</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">End</code></td>
+      <td>Jump to last record</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="horizontal-scrolling-no-wrap-mode">Horizontal Scrolling (No-wrap mode)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Left</code></td>
+      <td>Scroll left 1 bp</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Right</code></td>
+      <td>Scroll right 1 bp</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">L</code></td>
+      <td>Scroll left 25 bp</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">K</code></td>
+      <td>Scroll right 25 bp</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+L</code></td>
+      <td>Scroll left 250 bp</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Ctrl+K</code></td>
+      <td>Scroll right 250 bp</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="search">Search</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/</code></td>
+      <td>Enter search mode</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">:</code></td>
+      <td>Jump to record number</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">n</code></td>
+      <td>Next search match</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Shift+N</code></td>
+      <td>Previous search match</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="search-modes">Search modes</h4>
+
+<p>When you press <code class="language-plaintext highlighter-rouge">/</code> and enter a pattern:</p>
+
+<ul>
+  <li>
+    <p><strong>Oligo search</strong>: If the pattern contains only IUPAC nucleotide characters
+(A, C, G, T, N, U, R, Y, S, W, K, M, B, D, H, V), it searches in sequences
+and highlights matches with a magenta background.</p>
+  </li>
+  <li>
+    <p><strong>Text search</strong>: If the pattern contains other characters, it searches
+in sequence names and comments (case-insensitive) and highlights matches
+in the header.</p>
+  </li>
+</ul>
+
+<h3 id="display-options">Display Options</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">S</code></td>
+      <td>Toggle line wrap ON/OFF</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">T</code></td>
+      <td>Cycle through themes</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">R</code></td>
+      <td>Toggle record numbers</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">C</code></td>
+      <td>Toggle compact FASTQ view (bases colored by quality)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">U</code></td>
+      <td>Toggle quality bars/characters</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>Toggle sequence base coloring ON/OFF</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">H</code></td>
+      <td>Show help screen</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Q</code>, <code class="language-plaintext highlighter-rouge">Esc</code></td>
+      <td>Quit (or exit help)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="line-wrap-modes">Line Wrap Modes</h2>
+
+<h3 id="wrap-on-default">Wrap ON (default)</h3>
+
+<p>Sequences wrap across multiple lines. For FASTQ files, each line of sequence
+is immediately followed by its corresponding quality line:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@sequence_name comment
+ACGTACGTACGTACGTACGT
+████████████████████
+ACGTACGTACGT
+████████████
+</code></pre></div></div>
+
+<h3 id="wrap-off--s-or-toggle-with-s">Wrap OFF (<code class="language-plaintext highlighter-rouge">-S</code> or toggle with <code class="language-plaintext highlighter-rouge">S</code>)</h3>
+
+<p>Sequences display on a single line with horizontal scrolling. Use arrow keys
+or <code class="language-plaintext highlighter-rouge">L</code>/<code class="language-plaintext highlighter-rouge">K</code> to scroll left and right.</p>
+
+<h2 id="themes">Themes</h2>
+
+<p>Three color themes are available, cycle through them with <code class="language-plaintext highlighter-rouge">T</code>:</p>
+
+<ol>
+  <li><strong>Dark</strong> (default): Light text on dark background</li>
+  <li><strong>Light</strong>: Dark text on light background</li>
+  <li><strong>Solarized</strong>: Solarized color palette</li>
+</ol>
+
+<h2 id="color-legend">Color Legend</h2>
+
+<h3 id="dna-bases">DNA Bases</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Base</th>
+      <th>Color</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>Red</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>Cyan</td>
+    </tr>
+    <tr>
+      <td>G</td>
+      <td>Green</td>
+    </tr>
+    <tr>
+      <td>T/U</td>
+      <td>Yellow</td>
+    </tr>
+    <tr>
+      <td>N</td>
+      <td>White/Gray</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="quality-scores">Quality Scores</h3>
+
+<p>Quality scores are rendered as colored Unicode bars (or ASCII with <code class="language-plaintext highlighter-rouge">--ascii</code>):</p>
+
+<ul>
+  <li><strong>Low quality</strong> (Q &lt; 15): Red</li>
+  <li><strong>Medium quality</strong> (Q 15-30): Yellow</li>
+  <li><strong>High quality</strong> (Q &gt; 30): Green</li>
+</ul>
+
+<h3 id="compact-fastq-view">Compact FASTQ View</h3>
+
+<p>When compact view is enabled (<code class="language-plaintext highlighter-rouge">C</code>), bases are colored by their quality score
+instead of base identity:</p>
+
+<ul>
+  <li><strong>Very low quality</strong>: Gray</li>
+  <li><strong>Low quality</strong>: Red</li>
+  <li><strong>Medium quality</strong>: Yellow</li>
+  <li><strong>Good quality</strong>: Green</li>
+</ul>
+
+<h3 id="highlighting">Highlighting</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Match Type</th>
+      <th>Background Color</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Oligo 1 (<code class="language-plaintext highlighter-rouge">-o</code>)</td>
+      <td>Blue</td>
+    </tr>
+    <tr>
+      <td>Oligo 2 (<code class="language-plaintext highlighter-rouge">-r</code>)</td>
+      <td>Red</td>
+    </tr>
+    <tr>
+      <td>Search match</td>
+      <td>Magenta</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="basic-usage">Basic usage</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu less sequences.fastq
+</code></pre></div></div>
+
+<h3 id="with-oligo-highlighting">With oligo highlighting</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu less <span class="nt">-o</span> ACGTACGT <span class="nt">-r</span> TGCATGCA sequences.fastq
+</code></pre></div></div>
+
+<h3 id="start-without-line-wrap">Start without line wrap</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu less <span class="nt">-S</span> long_sequences.fasta
+</code></pre></div></div>
+
+<h3 id="with-mouse-support">With mouse support</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu less <span class="nt">-m</span> sequences.fastq
+</code></pre></div></div>
+
+<p>Or set the environment variable:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">SEQFU_MOUSE</span><span class="o">=</span>1
+seqfu less sequences.fastq
+</code></pre></div></div>
+
+<h2 id="tips">Tips</h2>
+
+<h3 id="searching-for-primer-binding-sites">Searching for primer binding sites</h3>
+
+<ol>
+  <li>Press <code class="language-plaintext highlighter-rouge">/</code> to enter search mode</li>
+  <li>Type your primer sequence (e.g., <code class="language-plaintext highlighter-rouge">ACGTACGT</code>)</li>
+  <li>Press Enter</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">n</code> and <code class="language-plaintext highlighter-rouge">N</code> to navigate between matches</li>
+  <li>Matches are highlighted in magenta</li>
+</ol>
+
+<h3 id="quickly-jumping-to-a-specific-record">Quickly jumping to a specific record</h3>
+
+<ol>
+  <li>Press <code class="language-plaintext highlighter-rouge">:</code> to enter jump mode</li>
+  <li>Type the record number (1-based)</li>
+  <li>Press Enter</li>
+</ol>
+
+<h3 id="finding-sequences-by-name">Finding sequences by name</h3>
+
+<ol>
+  <li>Press <code class="language-plaintext highlighter-rouge">/</code> to enter search mode</li>
+  <li>Type part of the sequence name (e.g., <code class="language-plaintext highlighter-rouge">sample_001</code>)</li>
+  <li>Press Enter</li>
+  <li>The matching text in the header will be highlighted</li>
+</ol>
+
+<h2 id="unicode-support">Unicode Support</h2>
+
+<p>The quality bars use Unicode block characters for graphical rendering.
+If your terminal doesn’t support Unicode, use <code class="language-plaintext highlighter-rouge">--ascii</code> for ASCII-only output,
+or <code class="language-plaintext highlighter-rouge">--qual-chars</code> to show the raw FASTQ quality characters.</p>
+
+<p>Test Unicode support:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nt">-e</span> <span class="s1">'\xe2\x82\xac'</span>
+</code></pre></div></div>
+
+<p>If you see the Euro sign, your terminal supports Unicode.</p>
+
+<h2 id="see-also">See Also</h2>
+
+<ul>
+  <li><a href="view.md">seqfu view</a> - Non-interactive sequence viewer</li>
+  <li><a href="../utilities/fu-msa.md">fu-msa</a> - Interactive multiple sequence alignment viewer</li>
+</ul>
+
+      </article>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="pagination" aria-label="Page navigation">
+  
+    <a href="../../commands/lanes/" class="pagination-link pagination-prev">
+      <span class="pagination-label">Previous</span>
+      <span class="pagination-title">seqfu lanes</span>
+    </a>
+  
+  
+    <a href="../../commands/list/" class="pagination-link pagination-next">
+      <span class="pagination-label">Next</span>
+      <span class="pagination-title">seqfu list</span>
+    </a>
+  
+</nav>
+
+
+    </div>
+    <aside class="toc-sidebar">
+      
+
+
+
+
+<nav class="toc" aria-label="Table of contents">
+  <h4 class="toc-title">On this page</h4>
+  <ul class="toc-list">
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#comparison-with-seqfu-view" class="toc-link">Comparison with seqfu view</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#keyboard-navigation" class="toc-link">Keyboard Navigation</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#vertical-scrolling-records" class="toc-link">Vertical Scrolling (Records)</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#horizontal-scrolling-no-wrap-mode" class="toc-link">Horizontal Scrolling (No-wrap mode)</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#search" class="toc-link">Search</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#display-options" class="toc-link">Display Options</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#line-wrap-modes" class="toc-link">Line Wrap Modes</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#wrap-on-default" class="toc-link">Wrap ON (default)</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#wrap-off--s-or-toggle-with-s" class="toc-link">Wrap OFF (<code class="language-plaintext highlighter-rouge"</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#themes" class="toc-link">Themes</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#color-legend" class="toc-link">Color Legend</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#dna-bases" class="toc-link">DNA Bases</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#quality-scores" class="toc-link">Quality Scores</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#compact-fastq-view" class="toc-link">Compact FASTQ View</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#highlighting" class="toc-link">Highlighting</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#examples" class="toc-link">Examples</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#basic-usage" class="toc-link">Basic usage</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#with-oligo-highlighting" class="toc-link">With oligo highlighting</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#start-without-line-wrap" class="toc-link">Start without line wrap</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#with-mouse-support" class="toc-link">With mouse support</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#tips" class="toc-link">Tips</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#searching-for-primer-binding-sites" class="toc-link">Searching for primer binding sites</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#quickly-jumping-to-a-specific-record" class="toc-link">Quickly jumping to a specific record</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#finding-sequences-by-name" class="toc-link">Finding sequences by name</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#unicode-support" class="toc-link">Unicode Support</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#see-also" class="toc-link">See Also</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    </aside>
+  </main>
+</div>
+<button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="https://github.com/telatin/seqfu2"   target="_blank" rel="noopener">GitHub Repository</a>
+      <a href="https://www.quadram.ac.uk/"  target="_blank" rel="noopener">Quadram Institute Bioscience</a>
+      <a href="https://telatin.github.io"  target="_blank" rel="noopener">Andrea Telatin</a>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; 2026 Quadram Institute Bioscience. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="">Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="../../assets/js/dark-mode.js"></script>
+  <script src="../../assets/js/sidebar.js"></script>
+  <script src="../../assets/js/toc.js"></script>
+</body>
+</html>

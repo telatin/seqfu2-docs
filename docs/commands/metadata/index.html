@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>seqfu metadata | SeqFu 2.0</title>
+  <meta name="description" content="Generate metadata files from directories of sequencing reads">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="icon" href="../../assets/img/fusion-icon.svg" type="image/svg+xml">
+  <script>
+    / Apply saved theme before page renders to avoid flash
+    (function() {
+      var theme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+  <div class="header-inner">
+    <a href="../../" class="header-logo">
+      <img src="../../assets/img/logo-fusion.svg" alt="Fusion" class="logo-img">
+      <span class="logo-text">SeqFu 2.0 - the FASTX swiss-army knife</span>
+    </a>
+    <div class="header-actions">
+      <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <div class="doc-layout">
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+    <nav class="sidebar-nav" aria-label="Documentation navigation">
+  <ul class="sidebar-list">
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../" class="sidebar-link">SeqFu 2.0</a>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../get-started/" class="sidebar-link">Get started</a>
+        </li>
+      
+    
+      
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-category expanded">
+          
+            <button class="sidebar-category-btn" aria-expanded="true">
+              <span>Commands</span>
+              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          
+          <ul class="sidebar-subitems">
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/bases/" class="sidebar-link">seqfu bases</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/cat/" class="sidebar-link">seqfu cat</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/check/" class="sidebar-link">seqfu check</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/count/" class="sidebar-link">seqfu count</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/deinterleave/" class="sidebar-link">seqfu deinterleave</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/derep/" class="sidebar-link">seqfu derep</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/grep/" class="sidebar-link">seqfu grep</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/head/" class="sidebar-link">seqfu head</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/interleave/" class="sidebar-link">seqfu interleave</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/lanes/" class="sidebar-link">seqfu lanes</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/less/" class="sidebar-link">seqfu less</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/list/" class="sidebar-link">seqfu list</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/merge/" class="sidebar-link">seqfu merge</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item active">
+                  <a href="../../commands/metadata/" class="sidebar-link active">seqfu metadata</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/qual/" class="sidebar-link">seqfu qual</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/rc/" class="sidebar-link">seqfu rc</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/rotate/" class="sidebar-link">seqfu rotate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/sort/" class="sidebar-link">seqfu sort</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/stats/" class="sidebar-link">seqfu stats</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tabulate/" class="sidebar-link">seqfu tabulate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tail/" class="sidebar-link">seqfu tail</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tofasta/" class="sidebar-link">seqfu tofasta</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/trim/" class="sidebar-link">seqfu trim</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/view/" class="sidebar-link">seqfu view</a>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../background/" class="sidebar-link">Background</a>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../reference/" class="sidebar-link">Citation</a>
+        </li>
+      
+    
+      
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-category">
+          
+            <button class="sidebar-category-btn" aria-expanded="false">
+              <span>Tutorials</span>
+              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          
+          <ul class="sidebar-subitems">
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../faq/" class="sidebar-link">FAQ</a>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+  </aside>
+  <main class="doc-main">
+    <div class="doc-content">
+      
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="../../">SeqFu 2.0</a>
+    </li>
+    
+    
+      
+    
+      
+        
+        
+          
+          <li class="breadcrumb-item">
+            <a href="../../commands/">Commands</a>
+          </li>
+        
+      
+    
+      
+        
+        
+          <li class="breadcrumb-item current" aria-current="page">
+            seqfu metadata
+          </li>
+        
+      
+    
+  </ol>
+</nav>
+
+
+      <article class="markdown-body">
+        <h1>seqfu metadata</h1>
+        <p>Given one (or more) directories containing sequencing reads, this tool produces a metadata file by extracting the ID from the filename and optionally adding file paths or read counts.</p>
+
+<div class="admonition admonition-tip">
+  <div class="admonition-heading">
+    <span class="admonition-icon">💡</span>
+    <span class="admonition-title">Tip</span>
+  </div>
+  <div class="admonition-content">
+<p>You can use this tool to generate metadata table for multiple tools</p>
+  </div>
+</div>
+
+<h2 id="usage">Usage</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: 
+  metadata [options] [&lt;dir&gt;...]
+  metadata formats
+
+Prepare mapping files from directory containing FASTQ files
+
+Options:
+  -1, --for-tag STR      String found in filename of forward reads [default: _R1]
+  -2, --rev-tag STR      String found in filename of forward reads [default: _R2]
+  -s, --split STR        Separator used in filename to identify the sample ID [default: _]
+  --pos INT...           Which part of the filename is the Sample ID [default: 1]
+
+  -f, --format TYPE      Output format: dadaist, irida, manifest,... list to list [default: manifest]
+  -p, --add-path         Add the reads absolute path as column 
+  -c, --counts           Add the number of reads as a property column (experimental)
+  -t, --threads INT      Number of simultaneously opened files (legacy: ignored) 
+  --pe                   Enforce paired-end reads (not supported)
+  --ont                  Long reads (Oxford Nanopore) [default: false]
+
+  GLOBAL OPTIONS
+  --abs                  Force absolute path
+  --basename             Use basename instead of full path
+  --force-tsv            Force '\t' separator, otherwise selected by the format
+  --force-csv            Force ',' separator, otherwise selected by the format
+  -R, --rand-meta INT    Add a random metadata column with INT categories
+
+  FORMAT SPECIFIC OPTIONS
+  -P, --project INT      Project ID (only for irida)
+  --meta-split STR       Separator in the SampleID to extract metadata, used in MetaPhage [default: _]
+  --meta-part INT        Which part of the SampleID to extract metadata, used in MetaPhage [default: 1]
+  --meta-default STR     Default value for metadata, used in MetaPhage [default: Cond]
+
+  -v, --verbose          Verbose output
+  --debug                Debug output
+  -h, --help             Show this help
+
+</code></pre></div></div>
+
+<h2 id="output-formats">Output formats</h2>
+
+<p>SeqFu metadata now supports the following output formats:</p>
+
+<ol>
+  <li><strong>manifest</strong>: Used as import manifest for <a href="https://qiime2.org/">Qiime2</a> artifacts.</li>
+  <li><strong>qiime1</strong>: Forward-compatible <a href="http://qiime.org/">Qiime1</a> mapping file.</li>
+  <li><strong>qiime2</strong>: <a href="https://qiime2.org/">Qiime2</a> metadata file.</li>
+  <li><strong>dadaist</strong>: <a href="https://quadram-institute-bioscience.github.io/dadaist2">Dadaist2</a> compatible metadata.</li>
+  <li><strong>lotus</strong>: <a href="http://lotus2.earlham.ac.uk/">Lotus</a> mapping file (tested with Lotus1).</li>
+  <li><strong>irida</strong>: <a href="https://github.com/phac-nml/irida-uploader">IRIDA uploader</a> sample sheet. Requires <code class="language-plaintext highlighter-rouge">-P PROJECTID</code>.</li>
+  <li><strong>metaphage</strong>: <a href="https://mattiapandolfovr.github.io/MetaPhage">MetaPhage</a> metadata file. Use <code class="language-plaintext highlighter-rouge">--meta-split</code>, <code class="language-plaintext highlighter-rouge">--meta-part</code>, and <code class="language-plaintext highlighter-rouge">--meta-default</code> to customize a Treatment column.</li>
+  <li><strong>ampliseq</strong>: <a href="https://nf-co.re/ampliseq">nf-core/ampliseq</a> metadata file.</li>
+  <li><strong>rnaseq</strong>: <a href="https://nf-co.re/rnaseq">nf-core/rnaseq</a> metadata file.</li>
+  <li><strong>bactopia</strong>: <a href="https://bactopia.github.io/">Bactopia</a> FOFN (File of File Names) file.</li>
+  <li><strong>mag</strong>: <a href="https://nf-co.re/mag">nf-core/mag</a> metadata file.</li>
+</ol>
+
+<h2 id="new-features">New Features</h2>
+
+<ul>
+  <li>Support for <code class="language-plaintext highlighter-rouge">--format bactopia</code> to generate Bactopia FOFN files.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">--ont</code> option for long reads (Oxford Nanopore Technology).</li>
+  <li>Enhanced support for various bioinformatics pipelines (ampliseq, rnaseq, mag).</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="manifest-default">Manifest (default)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu metadata ./MiSeq_SOP/
+</code></pre></div></div>
+
+<p>Output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sample-id	forward-absolute-filepath	reverse-absolute-filepath
+F3D0	/Users/telatin/MiSeq_SOP/F3D0_S188_L001_R1_001.fastq.gz	/Users/telatin/MiSeq_SOP/F3D0_S188_L001_R2_001.fastq.gz
+F3D1	/Users/telatin/MiSeq_SOP/F3D1_S189_L001_R1_001.fastq.gz	/Users/telatin/MiSeq_SOP/F3D1_S189_L001_R2_001.fastq.gz
+...
+</code></pre></div></div>
+
+<h3 id="qiime1-mapping-file">Qiime1 mapping file</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu metadata MiSeq_SOP <span class="nt">-f</span> qiime1 <span class="nt">--add-path</span> <span class="nt">--counts</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#SampleID	Counts	Paths
+F3D0	7793	F3D0_S188_L001_R1_001.fastq.gz,F3D0_S188_L001_R2_001.fastq.gz
+F3D1	5869	F3D1_S189_L001_R1_001.fastq.gz,F3D1_S189_L001_R2_001.fastq.gz
+...
+</code></pre></div></div>
+
+<h3 id="irida-uploader">IRIDA uploader</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu metadata <span class="nt">-f</span> irida <span class="nt">-P</span> 123 data/pe/
+</code></pre></div></div>
+
+<p>Output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sample_Name,Project_ID,File_Forward,File_Reverse
+sample1,123,sample1_R1.fq.gz,sample1_R2.fq.gz
+sample2,123,sample2_R1.fq.gz,sample2_R2.fq.gz
+</code></pre></div></div>
+
+<h3 id="bactopia-fofn">Bactopia FOFN</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu metadata <span class="nt">-f</span> bactopia data/pe/
+</code></pre></div></div>
+
+<p>For ONT data, add <code class="language-plaintext highlighter-rouge">--ont</code></p>
+
+<p>Output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sample	runtype	r1	r2
+sample1	paired-end	/path/to/data/pe/sample1_R1.fq.gz	/path/to/data/pe/sample1_R2.fq.gz
+sample2	paired-end	/path/to/data/pe/sample2_R1.fq.gz	/path/to/data/pe/sample2_R2.fq.gz
+</code></pre></div></div>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">--add-path</code> to include full file paths in the output (when supported by the format).</li>
+  <li>The <code class="language-plaintext highlighter-rouge">--counts</code> option adds read counts to the output (experimental feature, not supported by all formats).</li>
+  <li>Format-specific options (like <code class="language-plaintext highlighter-rouge">--project</code> for IRIDA) are required for certain output types.</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">--verbose</code> for detailed processing information and <code class="language-plaintext highlighter-rouge">--debug</code> for troubleshooting.</li>
+</ul>
+
+<p>For more information on each format and its specific options, please refer to the respective tool’s documentation.</p>
+
+      </article>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="pagination" aria-label="Page navigation">
+  
+    <a href="../../commands/merge/" class="pagination-link pagination-prev">
+      <span class="pagination-label">Previous</span>
+      <span class="pagination-title">seqfu merge</span>
+    </a>
+  
+  
+    <a href="../../commands/qual/" class="pagination-link pagination-next">
+      <span class="pagination-label">Next</span>
+      <span class="pagination-title">seqfu qual</span>
+    </a>
+  
+</nav>
+
+
+    </div>
+    <aside class="toc-sidebar">
+      
+
+
+
+
+<nav class="toc" aria-label="Table of contents">
+  <h4 class="toc-title">On this page</h4>
+  <ul class="toc-list">
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#usage" class="toc-link">Usage</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#output-formats" class="toc-link">Output formats</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#new-features" class="toc-link">New Features</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#examples" class="toc-link">Examples</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#manifest-default" class="toc-link">Manifest (default)</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#qiime1-mapping-file" class="toc-link">Qiime1 mapping file</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#irida-uploader" class="toc-link">IRIDA uploader</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#bactopia-fofn" class="toc-link">Bactopia FOFN</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#notes" class="toc-link">Notes</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    </aside>
+  </main>
+</div>
+<button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="https://github.com/telatin/seqfu2"   target="_blank" rel="noopener">GitHub Repository</a>
+      <a href="https://www.quadram.ac.uk/"  target="_blank" rel="noopener">Quadram Institute Bioscience</a>
+      <a href="https://telatin.github.io"  target="_blank" rel="noopener">Andrea Telatin</a>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; 2026 Quadram Institute Bioscience. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="">Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="../../assets/js/dark-mode.js"></script>
+  <script src="../../assets/js/sidebar.js"></script>
+  <script src="../../assets/js/toc.js"></script>
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>seqfu bases | SeqFu 2.0</title>
+  <meta name="description" content="Count DNA bases and GC content in FASTA/FASTQ files">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="icon" href="../../assets/img/fusion-icon.svg" type="image/svg+xml">
+  <script>
+    / Apply saved theme before page renders to avoid flash
+    (function() {
+      var theme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+  <div class="header-inner">
+    <a href="../../" class="header-logo">
+      <img src="../../assets/img/logo-fusion.svg" alt="Fusion" class="logo-img">
+      <span class="logo-text">SeqFu 2.0 - the FASTX swiss-army knife</span>
+    </a>
+    <div class="header-actions">
+      <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <div class="doc-layout">
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+    <nav class="sidebar-nav" aria-label="Documentation navigation">
+  <ul class="sidebar-list">
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../" class="sidebar-link">SeqFu 2.0</a>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../get-started/" class="sidebar-link">Get started</a>
+        </li>
+      
+    
+      
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-category expanded">
+          
+            <button class="sidebar-category-btn" aria-expanded="true">
+              <span>Commands</span>
+              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          
+          <ul class="sidebar-subitems">
+            
+              
+                
+                
+                <li class="sidebar-item active">
+                  <a href="../../commands/bases/" class="sidebar-link active">seqfu bases</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/cat/" class="sidebar-link">seqfu cat</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/check/" class="sidebar-link">seqfu check</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/count/" class="sidebar-link">seqfu count</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/deinterleave/" class="sidebar-link">seqfu deinterleave</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/derep/" class="sidebar-link">seqfu derep</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/grep/" class="sidebar-link">seqfu grep</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/head/" class="sidebar-link">seqfu head</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/interleave/" class="sidebar-link">seqfu interleave</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/lanes/" class="sidebar-link">seqfu lanes</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/less/" class="sidebar-link">seqfu less</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/list/" class="sidebar-link">seqfu list</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/merge/" class="sidebar-link">seqfu merge</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/metadata/" class="sidebar-link">seqfu metadata</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/qual/" class="sidebar-link">seqfu qual</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/rc/" class="sidebar-link">seqfu rc</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/rotate/" class="sidebar-link">seqfu rotate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/sort/" class="sidebar-link">seqfu sort</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/stats/" class="sidebar-link">seqfu stats</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tabulate/" class="sidebar-link">seqfu tabulate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tail/" class="sidebar-link">seqfu tail</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/tofasta/" class="sidebar-link">seqfu tofasta</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/trim/" class="sidebar-link">seqfu trim</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../commands/view/" class="sidebar-link">seqfu view</a>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../background/" class="sidebar-link">Background</a>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../reference/" class="sidebar-link">Citation</a>
+        </li>
+      
+    
+      
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-category">
+          
+            <button class="sidebar-category-btn" aria-expanded="false">
+              <span>Tutorials</span>
+              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          
+          <ul class="sidebar-subitems">
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="../../faq/" class="sidebar-link">FAQ</a>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+  </aside>
+  <main class="doc-main">
+    <div class="doc-content">
+      
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="../../">SeqFu 2.0</a>
+    </li>
+    
+    
+      
+    
+      
+        
+        
+          
+          <li class="breadcrumb-item">
+            <a href="../../commands/">Commands</a>
+          </li>
+        
+      
+    
+      
+        
+        
+          <li class="breadcrumb-item current" aria-current="page">
+            seqfu bases
+          </li>
+        
+      
+    
+  </ol>
+</nav>
+
+
+      <article class="markdown-body">
+        <h1>seqfu bases</h1>
+        <p>Counts the number of A, C, G, T and Ns in FASTA and FASTQ files.</p>
+
+<pre><code class="language-note">Introduced in SeqFu 1.15.1 as experimental feature
+</code></pre>
+
+<p>Calculates the composition of DNA sequences</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: bases [options] [&lt;inputfile&gt; ...]
+
+Print the DNA bases, and %GC content, in the input files
+
+Options:
+  -c, --raw-counts       Print counts and not ratios
+  -t, --thousands        Print thousands separator
+  -a, --abspath          Print absolute path 
+  -b, --basename         Print the basename of the file
+  -n, --nice             Print terminal table
+  -d, --digits INT       Number of digits to print [default: 2]
+  -H, --header           Print header (auto enabled with --nice)
+  -v, --verbose          Verbose output
+  --debug                Debug output
+  --help                 Show this help
+</code></pre></div></div>
+
+<h3 id="output">Output</h3>
+
+<p>The output is a table with the following columns (<code class="language-plaintext highlighter-rouge">-H</code> to print the header):</p>
+
+<ol>
+  <li>Filename (<code class="language-plaintext highlighter-rouge">-a</code> for absolute path, <code class="language-plaintext highlighter-rouge">-b</code> for basename)</li>
+  <li>Total bases (<code class="language-plaintext highlighter-rouge">-t</code> to add thousand separator)</li>
+  <li>Ratio of <strong>A</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>C</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>G</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>T</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>N</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>Other</strong> characters (either IUPAC DNA or invalid chars) over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>%GC ratio</li>
+  <li>Ratio of <strong>Uppercase</strong> bases over total bases (if enabled by <code class="language-plaintext highlighter-rouge">-u</code>)</li>
+</ol>
+
+<h3 id="example">Example</h3>
+
+<p>A simple example:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu bases --header data/illumina_*
+
+#Filename               Total   A       C       G       T       N       Other   %GC
+data/illumina_1.fq.gz   630     18.57   18.57   18.57   18.57   18.57   0.00    59.21
+data/illumina_2.fq.gz   630     21.43   21.43   21.43   21.43   21.43   0.00    60.48
+data/illumina_nocomm.fq 630     18.57   18.57   18.57   18.57   18.57   0.00    59.21
+</code></pre></div></div>
+
+<p>when using <code class="language-plaintext highlighter-rouge">-n</code> the output is a nice table:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────┬───────┬────────┬────────┬────────┬────────┬──────┬───────┬────────┬───────────┐
+│ File                │ Bases │ A      │ C      │ G      │ T      │ N    │ Other │ %GC    │ Uppercase │
+├─────────────────────┼───────┼────────┼────────┼────────┼────────┼──────┼───────┼────────┼───────────┤
+│ data/base_at.fa     │ 33    │ 42.42  │ 0.00   │ 0.00   │ 57.58  │ 0.00 │ 0.00  │ 0.00   │ 100.00    │
+│ data/bases_lower.fa │ 15    │ 33.33  │ 26.67  │ 20.00  │ 13.33  │ 6.67 │ 0.00  │ 46.67  │ 0.00      │
+│ data/base_c.fa      │ 5     │ 0.00   │ 100.00 │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 100.00 │ 0.00      │
+│ data/base.fa        │ 2     │ 50.00  │ 50.00  │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 50.00  │ 100.00    │
+│ data/upper-none.fa  │ 7     │ 42.86  │ 14.29  │ 28.57  │ 14.29  │ 0.00 │ 0.00  │ 42.86  │ 0.00      │
+│ data/base_t.fa      │ 5     │ 0.00   │ 0.00   │ 0.00   │ 100.00 │ 0.00 │ 0.00  │ 0.00   │ 0.00      │
+│ data/base_a.fa      │ 5     │ 100.00 │ 0.00   │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 0.00   │ 100.00    │
+│ data/upper-lower.fa │ 10    │ 50.00  │ 50.00  │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 50.00  │ 50.00     │
+│ data/base_g.fa      │ 1     │ 0.00   │ 0.00   │ 100.00 │ 0.00   │ 0.00 │ 0.00  │ 100.00 │ 100.00    │
+│ data/upper-only.fa  │ 9     │ 44.44  │ 11.11  │ 44.44  │ 0.00   │ 0.00 │ 0.00  │ 55.56  │ 100.00    │
+│ data/base_extra.fa  │ 20    │ 50.00  │ 0.00   │ 0.00   │ 0.00   │ 0.00 │ 50.00 │ 0.00   │ 100.00    │
+│ data/base_cg.fa     │ 25    │ 0.00   │ 52.00  │ 48.00  │ 0.00   │ 0.00 │ 0.00  │ 100.00 │ 100.00    │
+└─────────────────────┴───────┴────────┴────────┴────────┴────────┴──────┴───────┴────────┴───────────┘
+</code></pre></div></div>
+
+      </article>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="pagination" aria-label="Page navigation">
+  
+    <a href="../../get-started/" class="pagination-link pagination-prev">
+      <span class="pagination-label">Previous</span>
+      <span class="pagination-title">Get started</span>
+    </a>
+  
+  
+    <a href="../../commands/cat/" class="pagination-link pagination-next">
+      <span class="pagination-label">Next</span>
+      <span class="pagination-title">seqfu cat</span>
+    </a>
+  
+</nav>
+
+
+    </div>
+    <aside class="toc-sidebar">
+      
+
+
+
+
+<nav class="toc" aria-label="Table of contents">
+  <h4 class="toc-title">On this page</h4>
+  <ul class="toc-list">
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#output" class="toc-link">Output</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#example" class="toc-link">Example</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    </aside>
+  </main>
+</div>
+<button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="https://github.com/telatin/seqfu2"   target="_blank" rel="noopener">GitHub Repository</a>
+      <a href="https://www.quadram.ac.uk/"  target="_blank" rel="noopener">Quadram Institute Bioscience</a>
+      <a href="https://telatin.github.io"  target="_blank" rel="noopener">Andrea Telatin</a>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; 2026 Quadram Institute Bioscience. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="">Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="../../assets/js/dark-mode.js"></script>
+  <script src="../../assets/js/sidebar.js"></script>
+  <script src="../../assets/js/toc.js"></script>
+</body>
+</html>

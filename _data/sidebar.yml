@@ -1,0 +1,66 @@
+- title: SeqFu 2.0
+  url: /
+- title: Get started
+  url: /get-started/
+- title: Commands
+  expanded: true
+  items:
+    - title: seqfu bases
+      url: /commands/bases/
+    - title: seqfu cat
+      url: /commands/cat/
+    - title: seqfu check
+      url: /commands/check/
+    - title: seqfu count
+      url: /commands/count/
+    - title: seqfu deinterleave
+      url: /commands/deinterleave/
+    - title: seqfu derep
+      url: /commands/derep/
+    - title: seqfu grep
+      url: /commands/grep/
+    - title: seqfu head
+      url: /commands/head/
+    - title: seqfu interleave
+      url: /commands/interleave/
+    - title: seqfu lanes
+      url: /commands/lanes/
+    - title: seqfu less
+      url: /commands/less/
+    - title: seqfu list
+      url: /commands/list/
+    - title: seqfu merge
+      url: /commands/merge/
+    - title: seqfu metadata
+      url: /commands/metadata/
+    - title: seqfu qual
+      url: /commands/qual/
+    - title: seqfu rc
+      url: /commands/rc/
+    - title: seqfu rotate
+      url: /commands/rotate/
+    - title: seqfu sort
+      url: /commands/sort/
+    - title: seqfu stats
+      url: /commands/stats/
+    - title: seqfu tabulate
+      url: /commands/tabulate/
+    - title: seqfu tail
+      url: /commands/tail/
+    - title: seqfu tofasta
+      url: /commands/tofasta/
+    - title: seqfu trim
+      url: /commands/trim/
+    - title: seqfu view
+      url: /commands/view/
+- title: Background
+  url: /background/
+- title: Citation
+  url: /reference/
+- title: Tutorials
+  collapsed: true
+  items:
+    - title: General
+      url: /tutorial/first/
+- title: FAQ
+  url: /faq/

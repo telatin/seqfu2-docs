@@ -1,0 +1,44 @@
+title: "SeqFu 2.0"
+description: "the FASTX swiss-army knife"
+url: ""
+baseurl: ""
+breadhome: "SeqFu 2.0"
+github: "https://github.com/telatin/seqfu2"
+
+author_url: "https://telatin.github.io"
+author_name: "Andrea Telatin"
+
+collections:
+  docs:
+    output: true
+    permalink: /:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "doc"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+plugins: []
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - _build.scss
+  - _sass
+  - .sass-cache
+  - _scripts
+  - build.sh
+  - README.md
+  - "*.png"
+  - docs
