@@ -13,6 +13,8 @@ permalink: /
 
 SeqFu is a general-purpose program to manipulate and parse information from FASTA/FASTQ files, supporting gzipped input files. It includes functions to interleave and de-interleave FASTQ files, rename sequences, and count and print statistics on sequence lengths. SeqFu is available for Linux and macOS.
 
+![Seqfu splash]({{ site.baseurl }}/assets/img/screenshot-seqfu.svg)
+
 ## Features
 
 - A compiled program delivering high-performance analyses

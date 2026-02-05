@@ -40,5 +40,4 @@ exclude:
   - _scripts
   - build.sh
   - README.md
-  - "*.png"
   - docs
