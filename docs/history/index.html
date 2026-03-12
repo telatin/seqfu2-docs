@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BamToCov 3.0 | BamToCov 3.0</title>
-  <meta name="description" content="A suite of utilities for BAM file coverage analysis">
+  <title>History | BamToCov 3.0</title>
+  <meta name="description" content="The history of BamToCov development">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -56,8 +56,8 @@
       
         
         
-        <li class="sidebar-item active">
-          <a href="/bamtocov/" class="sidebar-link active">BamToCov 3.0</a>
+        <li class="sidebar-item">
+          <a href="/bamtocov/" class="sidebar-link">BamToCov 3.0</a>
         </li>
       
     
@@ -184,8 +184,8 @@
       
         
         
-        <li class="sidebar-item">
-          <a href="/bamtocov/history/" class="sidebar-link">History</a>
+        <li class="sidebar-item active">
+          <a href="/bamtocov/history/" class="sidebar-link active">History</a>
         </li>
       
     
@@ -241,38 +241,113 @@
     <div class="doc-content">
       
 
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="/bamtocov/">BamToCov</a>
+    </li>
+    
+    
+      
+    
+      
+        
+        
+          <li class="breadcrumb-item current" aria-current="page">
+            History
+          </li>
+        
+      
+    
+  </ol>
+</nav>
+
 
       <article class="markdown-body">
-        <h1>BamToCov 3.0</h1>
-        <table>
-  <tbody>
-    <tr>
-      <td>😺 <strong><a href="https://github.com/telatin/bamtocov">Repository</a></strong></td>
-      <td>📦 <strong><a href="https://github.com/telatin/bamtocov/releases">Releases</a></strong></td>
-      <td>📃 <strong><a href="https://academic.oup.com/bioinformatics/article/38/9/2617/6535233">Paper</a></strong></td>
-    </tr>
-  </tbody>
-</table>
+        <h1>History</h1>
+        <p>This project extends <a href="https://github.com/telatin/covtobed">covtobed</a>,
+reimplementing the core algorithm in Nim.</p>
 
-<p><img src="/bamtocov/assets/img/bamtocov-banner.png" alt="bamtocov logo" /></p>
-
-<p>BamToCov is inspired by the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">UNIX Phylosophy</a> and the tools are designed for efficient computation
-of a very specific task. Integration of multiple samples and specific tasks can be achieved <a href="/bamtocov/scripts/">with scripts</a>
-and we provide a set to demonstrate the process.</p>
-
-<p><strong><a href="{ _docs/commands/bamtocov.md  | relative_url}">bamtocov</a></strong> will produce a <em>coverage BED</em> from a single BAM file, or a count matrix from a set of alignments and a target (in BED, GTF or GFF format).
-Used without a target, it is a drop-in replacement for <a href="https://github.com/telatin/covtobed">covtobed</a>, but discarding invalid alignments by default.
-When providing the target, it can produce coverage statistics for each region in the target, also with multiple BAM files.</p>
-
-<p><strong><a href="{ _docs/commands/bamtocounts.md  | relative_url}">bamtocounts</a></strong> will count the number of reads covering each target region,
-rather than the nucleotidic coverage</p>
-
-<p><strong><a href="{ _docs/commands/bamcountrefs.md  | relative_url}">bamcountrefs</a></strong> is a shortcut to count the number of reads per chromosome,
-with filters on the read flags, length and quality</p>
-
-<p><strong><a href="{ _docs/commands/covtotarget.md  | relative_url}">covtotarget</a></strong> (<em>legacy</em>) is an utility to create a count table from the <em>output</em> of
-the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.</p>
-
+<ul>
+  <li>2.9.0
+    <ul>
+      <li><strong>bamcountrefs</strong> is now multithreadsing</li>
+      <li>bug fixes</li>
+    </ul>
+  </li>
+  <li>2.8.0
+    <ul>
+      <li><strong>bamcountrefs</strong> bugfix for multiple files; optimised</li>
+      <li>refactoring: unified imports, added tests, fixed Make test to use the environment’s shell</li>
+    </ul>
+  </li>
+  <li>2.7.0
+    <ul>
+      <li><strong>bamtocounts</strong> now supports <code class="language-plaintext highlighter-rouge">--paired</code> to count fragments</li>
+      <li><strong>bamtocounts</strong> fixed a bug that ignored the user flag to exclude</li>
+      <li>[<strong>EXPERIMENTAL</strong>] testing <code class="language-plaintext highlighter-rouge">--extendRead INT</code> in bamtocov #6</li>
+    </ul>
+  </li>
+  <li>2.6.0
+    <ul>
+      <li><strong>bamtocounts</strong> algorithm rewritten to accept unsorted and non-indexed files. the requirement for indexed files will be permanently dropped, for consistency across the suite, while we recommend using sorted files, and, in the future, this requirement might be added again to allow for performance gains.</li>
+    </ul>
+  </li>
+  <li>2.5.0
+    <ul>
+      <li><strong>BamToCounts</strong> rewritten with the target engine of BamToCov</li>
+    </ul>
+  </li>
+  <li>2.4.0
+    <ul>
+      <li>Standed analysis is now supported with Wig-like output</li>
+    </ul>
+  </li>
+  <li>2.3.0:
+    <ul>
+      <li>Improved Wig support</li>
+      <li>Improved GTF format detection</li>
+      <li>Expanded test suite</li>
+    </ul>
+  </li>
+  <li>2.2.0:
+    <ul>
+      <li>Support for wiggle output (<code class="language-plaintext highlighter-rouge">--wig STEP</code> and <code class="language-plaintext highlighter-rouge">--op FUNCT</code>)</li>
+    </ul>
+  </li>
+  <li>2.1.1:
+    <ul>
+      <li>Help screen for all the tools updated to reflect the new tool names</li>
+      <li>Added <code class="language-plaintext highlighter-rouge">--tag STRING</code> in <code class="language-plaintext highlighter-rouge">bamcountrefs</code> to customise the reference column name</li>
+      <li>Initial support for <strong>Wig</strong> files</li>
+      <li>Expanded test suite and memory/speed benchmarks</li>
+    </ul>
+  </li>
+  <li>2.1.0:
+    <ul>
+      <li>Bug Fix: an assertion caused the program to fail if an alignment ended at the end of a chromosome.</li>
+      <li>Updated compilation instructions for Nimble and Bioconda builds</li>
+      <li>Speed improvements</li>
+    </ul>
+  </li>
+  <li>2.0.4:
+    <ul>
+      <li>Added new internal classes, like <em>output_t</em> and <em>coverage_t</em></li>
+    </ul>
+  </li>
+  <li>2.0.2:
+    <ul>
+      <li>Added <code class="language-plaintext highlighter-rouge">covtocounts</code></li>
+      <li>Added target support</li>
+      <li>Performance improvement</li>
+    </ul>
+  </li>
+  <li>2.0.0:
+    <ul>
+      <li>Initial release: Nim porting of the original C++ code</li>
+    </ul>
+  </li>
+</ul>
 
       </article>
       
@@ -292,12 +367,15 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <span></span>
+    <a href="/bamtocov/scripts/feat-counts/" class="pagination-link pagination-prev">
+      <span class="pagination-label">Previous</span>
+      <span class="pagination-title">feat-counts.py</span>
+    </a>
   
   
-    <a href="/bamtocov/get-started/" class="pagination-link pagination-next">
+    <a href="/bamtocov/reference/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">Get started</span>
+      <span class="pagination-title">Citation</span>
     </a>
   
 </nav>

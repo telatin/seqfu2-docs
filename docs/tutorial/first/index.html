@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>First steps | BamToCov 3.0</title>
+  <meta name="description" content="Some bamtocov examples to get you started">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/main.css">
-  <link rel="icon" href="../../assets/img/fusion-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/bamtocov/assets/css/main.css">
+  <link rel="icon" href="/bamtocov/assets/img/fusion-icon.svg" type="image/svg+xml">
   <script>
-    / Apply saved theme before page renders to avoid flash
+    // Apply saved theme before page renders to avoid flash
     (function() {
       var theme = localStorage.getItem('theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -22,9 +22,9 @@
 <body>
   <header class="site-header">
   <div class="header-inner">
-    <a href="../../" class="header-logo">
-      <img src="../../assets/img/logo-fusion.svg" alt="Fusion" class="logo-img">
-      <span class="logo-text">SeqFu 2.0 - the FASTX swiss-army knife</span>
+    <a href="/bamtocov/" class="header-logo">
+      <img src="/bamtocov/assets/img/logo-fusion.svg" alt="Fusion" class="logo-img">
+      <span class="logo-text">BamToCov 3.0 - coverage analysis and counts from BAM files</span>
     </a>
     <div class="header-actions">
       <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
@@ -57,7 +57,7 @@
         
         
         <li class="sidebar-item">
-          <a href="../../" class="sidebar-link">SeqFu 2.0</a>
+          <a href="/bamtocov/" class="sidebar-link">BamToCov 3.0</a>
         </li>
       
     
@@ -65,7 +65,15 @@
         
         
         <li class="sidebar-item">
-          <a href="../../get-started/" class="sidebar-link">Get started</a>
+          <a href="/bamtocov/get-started/" class="sidebar-link">Get started</a>
+        </li>
+      
+    
+      
+        
+        
+        <li class="sidebar-item">
+          <a href="/bamtocov/overview/" class="sidebar-link">Overview</a>
         </li>
       
     
@@ -89,7 +97,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="../../commands/bases/" class="sidebar-link">seqfu bases</a>
+                  <a href="/bamtocov/commands/bamtocov/" class="sidebar-link">BamToCov</a>
                 </li>
               
             
@@ -97,7 +105,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="../../commands/cat/" class="sidebar-link">seqfu cat</a>
+                  <a href="/bamtocov/commands/bamtocounts/" class="sidebar-link">BamToCounts</a>
                 </li>
               
             
@@ -105,7 +113,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="../../commands/check/" class="sidebar-link">seqfu check</a>
+                  <a href="/bamtocov/commands/bamcountrefs/" class="sidebar-link">BamCountRefs</a>
                 </li>
               
             
@@ -113,7 +121,35 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="../../commands/count/" class="sidebar-link">seqfu count</a>
+                  <a href="/bamtocov/commands/covtotarget/" class="sidebar-link">CovToTarget</a>
+                </li>
+              
+            
+          </ul>
+        </li>
+      
+    
+      
+        
+        
+        
+        
+        
+        
+        <li class="sidebar-category">
+          
+            <button class="sidebar-category-btn" aria-expanded="false">
+              <span>Scripts</span>
+              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          
+          <ul class="sidebar-subitems">
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="/bamtocov/scripts/average-coverage/" class="sidebar-link">average-coverage.py</a>
                 </li>
               
             
@@ -121,7 +157,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="../../commands/deinterleave/" class="sidebar-link">seqfu deinterleave</a>
+                  <a href="/bamtocov/scripts/low-cov-multisample/" class="sidebar-link">low-cov-multisample.py</a>
                 </li>
               
             
@@ -129,7 +165,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="../../commands/derep/" class="sidebar-link">seqfu derep</a>
+                  <a href="/bamtocov/scripts/make-target-from-bam/" class="sidebar-link">make-target-from-bam.py</a>
                 </li>
               
             
@@ -137,143 +173,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="../../commands/grep/" class="sidebar-link">seqfu grep</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/head/" class="sidebar-link">seqfu head</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/interleave/" class="sidebar-link">seqfu interleave</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/lanes/" class="sidebar-link">seqfu lanes</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/less/" class="sidebar-link">seqfu less</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/list/" class="sidebar-link">seqfu list</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/merge/" class="sidebar-link">seqfu merge</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/metadata/" class="sidebar-link">seqfu metadata</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/qual/" class="sidebar-link">seqfu qual</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/rc/" class="sidebar-link">seqfu rc</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/rotate/" class="sidebar-link">seqfu rotate</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/sort/" class="sidebar-link">seqfu sort</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/stats/" class="sidebar-link">seqfu stats</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/tabulate/" class="sidebar-link">seqfu tabulate</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/tail/" class="sidebar-link">seqfu tail</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/tofasta/" class="sidebar-link">seqfu tofasta</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/trim/" class="sidebar-link">seqfu trim</a>
-                </li>
-              
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="../../commands/view/" class="sidebar-link">seqfu view</a>
+                  <a href="/bamtocov/scripts/feat-counts/" class="sidebar-link">feat-counts.py</a>
                 </li>
               
             
@@ -285,7 +185,7 @@
         
         
         <li class="sidebar-item">
-          <a href="../../background/" class="sidebar-link">Background</a>
+          <a href="/bamtocov/history/" class="sidebar-link">History</a>
         </li>
       
     
@@ -293,7 +193,7 @@
         
         
         <li class="sidebar-item">
-          <a href="../../reference/" class="sidebar-link">Citation</a>
+          <a href="/bamtocov/reference/" class="sidebar-link">Citation</a>
         </li>
       
     
@@ -317,7 +217,7 @@
                 
                 
                 <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                  <a href="/bamtocov/tutorial/first/" class="sidebar-link active">First steps</a>
                 </li>
               
             
@@ -329,7 +229,7 @@
         
         
         <li class="sidebar-item">
-          <a href="../../faq/" class="sidebar-link">FAQ</a>
+          <a href="/bamtocov/faq/" class="sidebar-link">Frequently Asked Questions</a>
         </li>
       
     
@@ -344,7 +244,7 @@
 <nav class="breadcrumbs" aria-label="Breadcrumb">
   <ol class="breadcrumb-list">
     <li class="breadcrumb-item">
-      <a href="../../">SeqFu 2.0</a>
+      <a href="/bamtocov/">BamToCov</a>
     </li>
     
     
@@ -355,7 +255,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="/bamtocov/tutorial/">Tutorial</a>
           </li>
         
       
@@ -375,7 +275,28 @@
 
       <article class="markdown-body">
         <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h2 id="produce-the-coverage-bed-from-a-bam-file">Produce the coverage BED from a BAM file</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bamtocov alignments.bam <span class="o">&gt;</span> coverage.bed
+</code></pre></div></div>
+
+<h2 id="use-a-target-file-to-count-the-coverage-in-each-region">Use a target file to count the coverage in each region</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bamtocov <span class="nt">--regions</span> target.bed <span class="nt">--report</span> target-stats.tsv alignments.bam <span class="o">&gt;</span> coverage.bed 
+</code></pre></div></div>
+
+<h2 id="generate-a-matrix-from-multiple-outputs">Generate a matrix from multiple outputs</h2>
+
+<p>The output of multiple files in BED format makes no sense, so at this moment we require to
+explicitly specifying a <code class="language-plaintext highlighter-rouge">--skip-output</code> flag. The report matrix is saved with <code class="language-plaintext highlighter-rouge">--report</code> (or <code class="language-plaintext highlighter-rouge">-o</code>).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bamtocov <span class="nt">--regions</span> target.bed <span class="nt">--report</span> target-stats.tsv <span class="nt">--skip-output</span> <span class="k">*</span>.bam 
+</code></pre></div></div>
+
+<h2 id="count-the-coverage-per-target-using-legacy-covtobed-output">Count the coverage per target using legacy “covtobed” output</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>covtobed file.bam | covtotarget ...
+</code></pre></div></div>
 
       </article>
       
@@ -395,15 +316,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="/bamtocov/reference/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
       <span class="pagination-title">Citation</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="/bamtocov/faq/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">Frequently Asked Questions</span>
     </a>
   
 </nav>
@@ -425,7 +346,31 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#produce-the-coverage-bed-from-a-bam-file" class="toc-link">Produce the coverage BED from a BAM file</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#use-a-target-file-to-count-the-coverage-in-each-region" class="toc-link">Use a target file to count the coverage in each region</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#generate-a-matrix-from-multiple-outputs" class="toc-link">Generate a matrix from multiple outputs</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#count-the-coverage-per-target-using-legacy-covtobed-output" class="toc-link">Count the coverage per target using legacy “covtobed” output</a>
       </li>
     
   </ul>
@@ -446,7 +391,7 @@
   <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-links">
-      <a href="https://github.com/telatin/seqfu2"   target="_blank" rel="noopener">GitHub Repository</a>
+      <a href="https://github.com/telatin/bamtocov"   target="_blank" rel="noopener">GitHub Repository</a>
       <a href="https://www.quadram.ac.uk/"  target="_blank" rel="noopener">Quadram Institute Bioscience</a>
       <a href="https://telatin.github.io"  target="_blank" rel="noopener">Andrea Telatin</a>
     </div>
@@ -459,8 +404,8 @@
   </div>
 </footer>
 
-  <script src="../../assets/js/dark-mode.js"></script>
-  <script src="../../assets/js/sidebar.js"></script>
-  <script src="../../assets/js/toc.js"></script>
+  <script src="/bamtocov/assets/js/dark-mode.js"></script>
+  <script src="/bamtocov/assets/js/sidebar.js"></script>
+  <script src="/bamtocov/assets/js/toc.js"></script>
 </body>
 </html>

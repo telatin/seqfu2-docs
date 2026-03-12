@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BamToCov 3.0 | BamToCov 3.0</title>
-  <meta name="description" content="A suite of utilities for BAM file coverage analysis">
+  <title>BamToCov | BamToCov 3.0</title>
+  <meta name="description" content="coverage analysis and counts from BAM files">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -56,8 +56,8 @@
       
         
         
-        <li class="sidebar-item active">
-          <a href="/bamtocov/" class="sidebar-link active">BamToCov 3.0</a>
+        <li class="sidebar-item">
+          <a href="/bamtocov/" class="sidebar-link">BamToCov 3.0</a>
         </li>
       
     
@@ -96,8 +96,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="/bamtocov/commands/bamtocov/" class="sidebar-link">BamToCov</a>
+                <li class="sidebar-item active">
+                  <a href="/bamtocov/commands/bamtocov/" class="sidebar-link active">BamToCov</a>
                 </li>
               
             
@@ -241,38 +241,153 @@
     <div class="doc-content">
       
 
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="/bamtocov/">BamToCov</a>
+    </li>
+    
+    
+      
+    
+      
+        
+        
+          
+          <li class="breadcrumb-item">
+            <a href="/bamtocov/commands/">Commands</a>
+          </li>
+        
+      
+    
+      
+        
+        
+          <li class="breadcrumb-item current" aria-current="page">
+            BamToCov
+          </li>
+        
+      
+    
+  </ol>
+</nav>
+
 
       <article class="markdown-body">
-        <h1>BamToCov 3.0</h1>
-        <table>
-  <tbody>
-    <tr>
-      <td>😺 <strong><a href="https://github.com/telatin/bamtocov">Repository</a></strong></td>
-      <td>📦 <strong><a href="https://github.com/telatin/bamtocov/releases">Releases</a></strong></td>
-      <td>📃 <strong><a href="https://academic.oup.com/bioinformatics/article/38/9/2617/6535233">Paper</a></strong></td>
-    </tr>
-  </tbody>
-</table>
+        <h1>BamToCov</h1>
+        <h1 id="bamtocov">BamToCov</h1>
 
-<p><img src="/bamtocov/assets/img/bamtocov-banner.png" alt="bamtocov logo" /></p>
+<p>The main program of the suite that parses a sorted BAM file and
+generates a coverage file in BED format.</p>
 
-<p>BamToCov is inspired by the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">UNIX Phylosophy</a> and the tools are designed for efficient computation
-of a very specific task. Integration of multiple samples and specific tasks can be achieved <a href="/bamtocov/scripts/">with scripts</a>
-and we provide a set to demonstrate the process.</p>
+<h2 id="splash-screen">Splash screen</h2>
 
-<p><strong><a href="{ _docs/commands/bamtocov.md  | relative_url}">bamtocov</a></strong> will produce a <em>coverage BED</em> from a single BAM file, or a count matrix from a set of alignments and a target (in BED, GTF or GFF format).
-Used without a target, it is a drop-in replacement for <a href="https://github.com/telatin/covtobed">covtobed</a>, but discarding invalid alignments by default.
-When providing the target, it can produce coverage statistics for each region in the target, also with multiple BAM files.</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BamToCov 2.2.0
 
-<p><strong><a href="{ _docs/commands/bamtocounts.md  | relative_url}">bamtocounts</a></strong> will count the number of reads covering each target region,
-rather than the nucleotidic coverage</p>
+  Usage: bamtocov [options] [&lt;BAM&gt;]...
 
-<p><strong><a href="{ _docs/commands/bamcountrefs.md  | relative_url}">bamcountrefs</a></strong> is a shortcut to count the number of reads per chromosome,
-with filters on the read flags, length and quality</p>
+Arguments:                                                                                                                                                 
+  &lt;BAM&gt;         the alignment file for which to calculate depth (default: STDIN)
 
-<p><strong><a href="{ _docs/commands/covtotarget.md  | relative_url}">covtotarget</a></strong> (<em>legacy</em>) is an utility to create a count table from the <em>output</em> of
-the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.</p>
+Core options:
+  -p, --physical               Calculate physical coverage
+  -s, --stranded               Report coverage separate by strand
+  -q, --quantize &lt;breaks&gt;      Comma separated list of breaks for quantized output
+  -w, --wig &lt;SPAN&gt;             Output in WIG format (using fixed &lt;SPAN&gt;), 0 will print in BED format [default: 0]
+  --op &lt;func&gt;                  How to summarize coverage for each WIG span (mean/min/max) [default: max]
+  -o, --report &lt;TXT&gt;           Output coverage report
+  --skip-output                Do not output per-base coverage
+  --report-low &lt;min&gt;           Report coverage for bases with coverage &lt; min [default: 0]
 
+Target files:
+  -r, --regions &lt;bed&gt;          Target file in BED or GFF3/GTF format (detected with the extension)
+  -t, --gff-type &lt;feat&gt;        GFF feature type to parse [default: CDS]
+  -i, --gff-id &lt;ID&gt;            GFF identifier [default: ID]
+  --gff-separator &lt;sep&gt;        GFF attributes separator [default: ;]
+  --gff                        Force GFF input (otherwise assumed by extension .gff)
+
+BAM reading options:
+  -T, --threads &lt;threads&gt;      BAM decompression threads [default: 0]
+  -F, --flag &lt;FLAG&gt;            Exclude reads with any of the bits in FLAG set [default: 1796]
+  -Q, --mapq &lt;mapq&gt;            Mapping quality threshold [default: 0]
+
+Other options:
+  --debug                      Enable diagnostics
+  -h, --help                   Show help
+</code></pre></div></div>
+
+<h2 id="bam-to-bedgraph">Bam To BedGraph</h2>
+
+<p>To produce a <a href="https://genome.ucsc.edu/goldenPath/help/bedgraph.html">BED graph</a>
+file with the coverage of an input BAM file, the syntax can be as minimal as:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bamtocov input.bam <span class="o">&gt;</span> coverage.bed
+</code></pre></div></div>
+
+<p>The output format will be in BED graph, having as columns: chromosome name, start position, end position, coverage.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seq1    0       9       0
+seq1    9       109     5
+seq1    109     189     0
+</code></pre></div></div>
+
+<p>To filter the reads in input:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--flag INT</code> to exclude reads with any of the bits in the FLAG set</li>
+  <li><code class="language-plaintext highlighter-rouge">--mapq INT</code> to exclude reads with a mapping quality lower than INT</li>
+</ul>
+
+<p>To manipulate the output:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--quantize STRING</code> to produce a quantized output, where the coverage is divided in bins specified in comma separated list as INT,INT…</li>
+  <li><code class="language-plaintext highlighter-rouge">--physical-coverage</code> to calculate the physical coverage of paired libraries</li>
+  <li>and <code class="language-plaintext highlighter-rouge">--stranded</code> to print a separate column for the forward and negative strands</li>
+</ul>
+
+<h3 id="stranded-output">Stranded output</h3>
+
+<p>When <code class="language-plaintext highlighter-rouge">--stranded</code> is used, the output is a five column BED-like file, where the columns are:</p>
+
+<ol>
+  <li>Chromosome name</li>
+  <li>Interval start</li>
+  <li>Interval end</li>
+  <li>Coverage in the forward strand</li>
+  <li>Coverage in the reverse strand</li>
+</ol>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seq1    0       9       0       0
+seq1    9       109     5       0
+seq1    109     189     0       0
+seq1    189     200     2       0
+seq1    200     250     4       0
+</code></pre></div></div>
+
+<h2 id="bam-to-wiggle">Bam To Wiggle</h2>
+
+<p>The <a href="https://genome.ucsc.edu/goldenPath/help/wiggle.html">Wiggle</a> format is commonly used to prepare
+track for genome browsers.
+BamToCov can produce a wiggle file with a fixed step specified via <code class="language-plaintext highlighter-rouge">--wig INT</code>. 
+By default the maximum coverage will be printed, but mean and min can be specified via <code class="language-plaintext highlighter-rouge">--op mean|max|min</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bamtocov <span class="nt">--wig</span> 200 input.bam <span class="o">&gt;</span> coverage.wig
+</code></pre></div></div>
+
+<p>The output is similar to:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fixedStep chrom=seq1 span=100
+0       5
+100     5
+200     6
+300     3
+400     2
+500     0
+</code></pre></div></div>
+
+<p>An alternative program to perform this analysis is <a href="http://lindenb.github.io/jvarkit/Bam2Wig.html">bam2wig</a>, that will
+take into account the CIGAR operations, if required.</p>
 
       </article>
       
@@ -292,12 +407,15 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <span></span>
+    <a href="/bamtocov/overview/" class="pagination-link pagination-prev">
+      <span class="pagination-label">Previous</span>
+      <span class="pagination-title">Overview</span>
+    </a>
   
   
-    <a href="/bamtocov/get-started/" class="pagination-link pagination-next">
+    <a href="/bamtocov/commands/bamtocounts/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">Get started</span>
+      <span class="pagination-title">BamToCounts</span>
     </a>
   
 </nav>
@@ -309,6 +427,45 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
 
 
 
+
+<nav class="toc" aria-label="Table of contents">
+  <h4 class="toc-title">On this page</h4>
+  <ul class="toc-list">
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#splash-screen" class="toc-link">Splash screen</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#bam-to-bedgraph" class="toc-link">Bam To BedGraph</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#stranded-output" class="toc-link">Stranded output</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#bam-to-wiggle" class="toc-link">Bam To Wiggle</a>
+      </li>
+    
+  </ul>
+</nav>
 
 
     </aside>

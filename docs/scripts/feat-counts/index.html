@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BamToCov 3.0 | BamToCov 3.0</title>
-  <meta name="description" content="A suite of utilities for BAM file coverage analysis">
+  <title>feat-counts.py | BamToCov 3.0</title>
+  <meta name="description" content="coverage analysis and counts from BAM files">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -56,8 +56,8 @@
       
         
         
-        <li class="sidebar-item active">
-          <a href="/bamtocov/" class="sidebar-link active">BamToCov 3.0</a>
+        <li class="sidebar-item">
+          <a href="/bamtocov/" class="sidebar-link">BamToCov 3.0</a>
         </li>
       
     
@@ -136,9 +136,9 @@
         
         
         
-        <li class="sidebar-category">
+        <li class="sidebar-category expanded">
           
-            <button class="sidebar-category-btn" aria-expanded="false">
+            <button class="sidebar-category-btn" aria-expanded="true">
               <span>Scripts</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -172,8 +172,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="/bamtocov/scripts/feat-counts/" class="sidebar-link">feat-counts.py</a>
+                <li class="sidebar-item active">
+                  <a href="/bamtocov/scripts/feat-counts/" class="sidebar-link active">feat-counts.py</a>
                 </li>
               
             
@@ -241,38 +241,86 @@
     <div class="doc-content">
       
 
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item">
+      <a href="/bamtocov/">BamToCov</a>
+    </li>
+    
+    
+      
+    
+      
+        
+        
+          
+          <li class="breadcrumb-item">
+            <a href="/bamtocov/scripts/">Scripts</a>
+          </li>
+        
+      
+    
+      
+        
+        
+          <li class="breadcrumb-item current" aria-current="page">
+            feat-counts.py
+          </li>
+        
+      
+    
+  </ol>
+</nav>
+
 
       <article class="markdown-body">
-        <h1>BamToCov 3.0</h1>
-        <table>
-  <tbody>
-    <tr>
-      <td>😺 <strong><a href="https://github.com/telatin/bamtocov">Repository</a></strong></td>
-      <td>📦 <strong><a href="https://github.com/telatin/bamtocov/releases">Releases</a></strong></td>
-      <td>📃 <strong><a href="https://academic.oup.com/bioinformatics/article/38/9/2617/6535233">Paper</a></strong></td>
-    </tr>
-  </tbody>
-</table>
+        <h1>feat-counts.py</h1>
+        <p>Counts feature across multiple samples producing a count matrix.</p>
 
-<p><img src="/bamtocov/assets/img/bamtocov-banner.png" alt="bamtocov logo" /></p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: feat-counts.py [-h] -t TARGET [-o OUTPUT] [--feat FEAT] [--id ID]
+                      [--binary BINARY] [--verbose]
+                      BAM [BAM ...]
 
-<p>BamToCov is inspired by the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">UNIX Phylosophy</a> and the tools are designed for efficient computation
-of a very specific task. Integration of multiple samples and specific tasks can be achieved <a href="/bamtocov/scripts/">with scripts</a>
-and we provide a set to demonstrate the process.</p>
+Count reads in multiple BAM files using a target file (BED or GFF or GTF)
 
-<p><strong><a href="{ _docs/commands/bamtocov.md  | relative_url}">bamtocov</a></strong> will produce a <em>coverage BED</em> from a single BAM file, or a count matrix from a set of alignments and a target (in BED, GTF or GFF format).
-Used without a target, it is a drop-in replacement for <a href="https://github.com/telatin/covtobed">covtobed</a>, but discarding invalid alignments by default.
-When providing the target, it can produce coverage statistics for each region in the target, also with multiple BAM files.</p>
+positional arguments:
+  BAM                   BAM file
 
-<p><strong><a href="{ _docs/commands/bamtocounts.md  | relative_url}">bamtocounts</a></strong> will count the number of reads covering each target region,
-rather than the nucleotidic coverage</p>
+optional arguments:
+  -h, --help            show this help message and exit
+  -t TARGET, --target TARGET
+                        Target file
+  -o OUTPUT, --output OUTPUT
+                        Output file
+  --feat FEAT           Feature type [default: exon]
+  --id ID               ID attribute [default: gene_id]
+  --binary BINARY       Binary to bamtocounts [default: bamtocounts]
+  --verbose             Verbose output
+</code></pre></div></div>
 
-<p><strong><a href="{ _docs/commands/bamcountrefs.md  | relative_url}">bamcountrefs</a></strong> is a shortcut to count the number of reads per chromosome,
-with filters on the read flags, length and quality</p>
+<h2 id="example">Example</h2>
 
-<p><strong><a href="{ _docs/commands/covtotarget.md  | relative_url}">covtotarget</a></strong> (<em>legacy</em>) is an utility to create a count table from the <em>output</em> of
-the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.</p>
+<p>:warning: All the input files must be sorted and indexed.</p>
 
+<p>Using the files in the repository it is possible to test the tool
+using a minimal dataset:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>feat-counts.py <span class="nt">-t</span> input/regions.bed input/min<span class="o">{</span>i,i2,i3<span class="o">}</span>.bam 
+</code></pre></div></div>
+
+<h2 id="example-output">Example output</h2>
+
+<p>By default the matrix is produced with four columns (BED coordinates and name)
+and then the counts for each sample. The sample name is the filename, removed the <code class="language-plaintext highlighter-rouge">.bam</code> extension.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Chr     Start   Stop    Name             mini3  mini2   mini
+seq0    0       210     empty0_0         0      1       0
+seq1    5       112     include_5        5      5       5
+seq1    410     532     overlap_2        1      2       2
+seq1    800     950     empty1_0         0      0       0
+seq2    300     532     shared1_10       0      10      10
+seq2    566     769     shared2_10       0      10      10
+</code></pre></div></div>
 
       </article>
       
@@ -292,12 +340,15 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <span></span>
+    <a href="/bamtocov/scripts/make-target-from-bam/" class="pagination-link pagination-prev">
+      <span class="pagination-label">Previous</span>
+      <span class="pagination-title">make-target-from-bam.py</span>
+    </a>
   
   
-    <a href="/bamtocov/get-started/" class="pagination-link pagination-next">
+    <a href="/bamtocov/history/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">Get started</span>
+      <span class="pagination-title">History</span>
     </a>
   
 </nav>
@@ -309,6 +360,29 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
 
 
 
+
+<nav class="toc" aria-label="Table of contents">
+  <h4 class="toc-title">On this page</h4>
+  <ul class="toc-list">
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#example" class="toc-link">Example</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#example-output" class="toc-link">Example output</a>
+      </li>
+    
+  </ul>
+</nav>
 
 
     </aside>
