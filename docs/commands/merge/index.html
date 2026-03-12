@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu merge | SeqFu 2.0</title>
+  <meta name="description" content="Merge paired-end reads preserving forward read quality">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -184,8 +184,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/merge/" class="sidebar-link">seqfu merge</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/merge/" class="sidebar-link active">seqfu merge</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu merge
           </li>
         
       
@@ -374,8 +374,52 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu merge</h1>
+        <pre><code class="language-note">Function under development: APIs and default parameters are likely going to change.
+
+This is why you don't see it listed in the main screen of SeqFu (yet).
+</code></pre>
+
+<p>A tool to naively merge paired end reads preserving the quality of the forward read.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: merge [options] -1 File_R1
+
+  Options:
+  -1, --R1 FILE                First paired-end file
+  -2, --R2 FILE                Second paired-end file, can be automatically inferred  
+  -i, --minid FLOAT            Minimum identity [default: 0.80]
+  -m, --minlen INT             Minimum overlap [default: 20]
+  --accepted-identity FLOAT    Accept fusion when identity is above FLOAT [default: 0.96]
+  -v, --verbose                Print verbose messages
+  -h, --help                   Show this help
+</code></pre></div></div>
+
+<h2 id="merging-reads">Merging reads</h2>
+
+<p>There are several tools to merge overlapping reads, and some are better than others.
+In particular if we use tools that correcly interpret the <em>Phred quality scores</em>, then
+tools like USEARCH and VSEARCH are correcly recalibrating the quality of the overlapping
+bases.</p>
+
+<p>Some tools, however, are expeting quality scores that are more likely produced by a
+sequencing tool. This experimental module of SeqFu joins the reads in a different way:
+takes the forward read <em>as is</em>, and extends it with the (reverse complemented) missing
+part taken from the R2.</p>
+
+<h2 id="potential-uses">Potential uses</h2>
+
+<p>This tool can be used to estimate the overlapping size or the “mergeability” of reads 
+before using the tools of choice.</p>
+
+<p>For example:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu merge -1 reads_R1.fq | seqfu head -n 200 | seqfu stats -n
+</code></pre></div></div>
+
+<h2 id="output">Output</h2>
+<p>The merged reads are printed to the standard output.</p>
+
+<p>Also this is somehow unusual compared with most mergin tools, but allows streaming which
+is a core feature in SeqFu tools.</p>
 
       </article>
       
@@ -395,15 +439,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/list/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu list</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/metadata/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu metadata</span>
     </a>
   
 </nav>
@@ -425,7 +469,23 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#merging-reads" class="toc-link">Merging reads</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#potential-uses" class="toc-link">Potential uses</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#output" class="toc-link">Output</a>
       </li>
     
   </ul>

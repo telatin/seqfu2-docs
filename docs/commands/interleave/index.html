@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu interleave | SeqFu 2.0</title>
+  <meta name="description" content="Combine paired-end reads into an interleaved FASTQ file">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -152,8 +152,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/interleave/" class="sidebar-link">seqfu interleave</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/interleave/" class="sidebar-link active">seqfu interleave</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu interleave
           </li>
         
       
@@ -374,8 +374,76 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu interleave</h1>
+        <p><em>interleave</em> (or <em>ilv</em>) is one of the core subprograms of <em>SeqFu</em>.
+It’s used to produce an <em>interleaved FASTQ file</em> from two separate 
+files containing the forward and the reverse read of a paired-end 
+fragment.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ilv: interleave FASTQ files
+
+  Usage: ilv [options] -1 &lt;forward-pair&gt; [-2 &lt;reverse-pair&gt;]
+
+  -f --for-tag &lt;tag-1&gt;       string identifying forward files [default: auto]
+  -r --rev-tag &lt;tag-2&gt;       string identifying forward files [default: auto]
+  -o --output &lt;outputfile&gt;   save file to &lt;out-file&gt; instead of STDOUT
+  -c --check                 enable careful mode (check sequence names and numbers)
+  -v --verbose               print verbose output
+
+  -s --strip-comments        skip comments
+  -p --prefix "string"       rename sequences (append a progressive number)
+
+guessing second file:
+  by default &lt;forward-pair&gt; is scanned for _R1. and substitute with _R2.
+  if this fails, the patterns _1. and _2. are tested.
+
+example:
+
+    ilv -1 file_R1.fq &gt; interleaved.fq
+</code></pre></div></div>
+
+<h2 id="what-are-interleaved-files">What are interleaved files?</h2>
+
+<p><a href="https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html">Paired end sequences</a> can be stored in two separate files 
+(usually denoted with the <strong>_R1</strong> and <strong>_R2</strong> strings) or in a single sequence where each sequence pair is 
+stored as two subsequent sequences.</p>
+
+<p>A simple example is depicted below:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=======================================================================
+File_R1.fq                File_R2.fq                Interleaved.fq
+=======================================================================
+
+
+@seq1                     @seq1                     @seq1
+TTTCATTCTGACTGCAACG       GGATTAAAAAAAGAGTGTC       TTTCATTCTGACTGCAACG
++                         +                         +
+IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+@seq2                     @seq2                     @seq1
+GTGTGGATTAAAAAAAAAA       TTTTTTTTTTTTTTTTTTT       GGATTAAAAAAAGAGTGTC
++                         +                         +
+IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+@seq3                     @seq3                     @seq2 
+AGAGTGTCTGATAGCA          GATAGCAG                  GTGTGGATTAAAAAAAAAA
++                         +                         +
+IIIIIIIIIIIIIIII          IIIIIIII                  IIIIIIIIIIIIIIIIIII
+                                                    @seq2
+                                                    TTTTTTTTTTTTTTTTTTT
+                                                    +
+                                                    IIIIIIIIIIIIIIIIIII
+                                                    @seq3
+                                                    AGAGTGTCTGATAGCA
+                                                    +
+                                                    IIIIIIIIIIIIIIII
+                                                    @seq3
+                                                    GATAGCAG
+                                                    +
+                                                    IIIIIIII
+</code></pre></div></div>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="../../assets/img/screenshot-interleave.svg" alt="Screenshot of &quot;seqfu interleave&quot;" title="SeqFu interleave" /></p>
 
       </article>
       
@@ -395,15 +463,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/head/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu head</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/lanes/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu lanes</span>
     </a>
   
 </nav>
@@ -425,7 +493,15 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#what-are-interleaved-files" class="toc-link">What are interleaved files?</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

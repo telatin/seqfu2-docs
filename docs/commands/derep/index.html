@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu derep | SeqFu 2.0</title>
+  <meta name="description" content="Dereplicate FASTA/FASTQ files to find unique sequences">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -128,8 +128,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/derep/" class="sidebar-link">seqfu derep</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/derep/" class="sidebar-link active">seqfu derep</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu derep
           </li>
         
       
@@ -374,8 +374,67 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu derep</h1>
+        <p><em>derep</em>  is one of the core subprograms of <em>SeqFu</em>, that allows the dereplication of FASTA and FASTQ files. 
+Dereplication, in R. C. Edgard <a href="https://drive5.com/usearch/manual/dereplication.html">words</a> is <em>A rather obscure name for finding the set of unique sequences. Or, equivalently, the process of finding duplicated (replicate) sequences.</em></p>
+
+<p>In simple words, given a FASTA file, only unique sequences will be printed in the output. A core feature is printing the number of identical sequences found in the original dataset.</p>
+
+<p>Dereplication is a step commonly used in NGS sequencing of amplicons, to reduce the computational time dedicated to the analysis of each representative sequence, and some tools will require dereplicated sequences as input 
+(e.g. <a href="https://rcedgar.github.io/usearch12_documentation/">USEARCH</a>).</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: derep [options] [&lt;inputfile&gt; ...]
+
+Options:
+  -k, --keep-name              Do not rename sequence, but use the first sequence name
+  -i, --ignore-size            Do not count 'size=INT;' annotations (they will be stripped in any case)
+  -m, --min-size=MIN_SIZE      Print clusters with size equal or bigger than INT sequences [default: 0]
+  -p, --prefix=PREFIX          Sequence name prefix [default: seq]
+  -5, --md5                    Use MD5 as sequence name (overrides other parameters)
+  -j, --json=JSON_FILE         Save dereplication metadata to JSON file
+  -s, --separator=SEPARATOR    Sequence name separator [default: .]
+  -w, --line-width=LINE_WIDTH  FASTA line width (0: unlimited) [default: 0]
+  -l, --min-length=MIN_LENGTH  Discard sequences shorter than MIN_LEN [default: 0]
+  -x, --max-length=MAX_LENGTH  Discard sequences longer than MAX_LEN [default: 0]
+  -c, --size-as-comment        Print cluster size as comment, not in sequence name
+  --add-len                    Add length to sequence
+  -v, --verbose                Print verbose messages
+  -h, --help                   Show this help
+</code></pre></div></div>
+
+<h2 id="size-values">Size values</h2>
+
+<p>By default the program will add the number of identical sequences found to the sequence name, as USEARCH does:
+For example, if a sequence is found 18.335 times in the input file, the output will contain a sequence with “;size=18335” in the name (unless <code class="language-plaintext highlighter-rouge">--ignore-size</code> is passed). The term “size” can be confusing, but it was adopted for compatibility with USEARCH/VSERACH.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;seq.1;size=18335
+CTTGGTCATTTAGAGGAAGTAAAAGTCGTAACAAGGTTTCCGTAGGTGAACCTGCGGAAGGATCATTACAGTATTCTTTTTGCCAGCGCTTAATTGCGCGGCGAAAAAACCTTACACACAGTGTTTTTTGTTATTACAAGAACTTTTGCTTTGGTCTGGACTAGAAATAGTTTGGGCCAGAGGTTTACTGAACTAAACTTCAATATTTATATTGAATTGTTATTTATTTAATTGTCAATTTGTTGATTAAATTCAAAAAATCTTCAAAACTTTCAACAACGGATCTCTTGGTTCTCGCATCGATGAAGAACGCAGC
+&gt;seq.2;size=4085
+CTTGGTCATTTAGAGGAAGTAAAAGTCGTAACAAGGTTTCCGTAGGTGAACCTGCGGAAGGATCATTATTGAAGTTTAACTCAGAGGGTTGTAGCTGGCTCCTCCAAGAGCATGTGCACGCCCTTTGTCTTTACTCTTTTCCACCTGTGCACCTTTTGTAGACCATGAGTGAACTCTCGAGAGCGTTGGCAACGACGTGATCGGTTTGGGGATTTGCGTTCAGCTTTCCCTGTAGCTCGTGGTTTATGTCTTATAAACTCTATAGTCTGTTTTGAATGTCTTATGGGTTTTGCGCTGTAATGGTGCGACCTTTATAAACTATACAACTTTTAGCAACGGATCTCTTGGCTCTCGCATCGATGAAGAACGCAGC
+&gt;seq.3;size=2453
+CTTGGTCATTTAGAGGAAGTAAGAGAGAAATGTATAAACTCATAATTGACGAATGATAATTGTTATTGAAGTTTTTGTAAAGGGGCTTCTTTATGAATAAGGGATACACGTTTGACGATATGATTAATACCATGATGCCCCTGGCCCTTTGACGGCTCGGCAAAGGGTGAAGGAATTTACTGCACGGTCAGGCCCTCGTCGCATCGATGAAGAACGCAGC
+</code></pre></div></div>
+
+<p>To keep the size separate from the sequence name it’s possible to used <code class="language-plaintext highlighter-rouge">-c</code> (<code class="language-plaintext highlighter-rouge">--size-as-comment</code>):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;seq.1 size=18335
+CTTGGTCATTTAGAGGAAGTAAAAGTCGTAACAAGGTTTCCGTAGGTGAACCTGCGGAAGGATCATTACAGTATTCTTTTTGCCAGCGCTTAATTGCGCGGCGAAAAAACCTTACACACAGTGTTTTTTGTTATTACAAGAACTTTTGCTTTGGTCTGGACTAGAAATAGTTTGGGCCAGAGGTTTACTGAACTAAACTTCAATATTTATATTGAATTGTTATTTATTTAATTGTCAATTTGTTGATTAAATTCAAAAAATCTTCAAAACTTTCAACAACGGATCTCTTGGTTCTCGCATCGATGAAGAACGCAGC
+&gt;seq.2 size=4085
+CTTGGTCATTTAGAGGAAGTAAAAGTCGTAACAAGGTTTCCGTAGGTGAACCTGCGGAAGGATCATTATTGAAGTTTAACTCAGAGGGTTGTAGCTGGCTCCTCCAAGAGCATGTGCACGCCCTTTGTCTTTACTCTTTTCCACCTGTGCACCTTTTGTAGACCATGAGTGAACTCTCGAGAGCGTTGGCAACGACGTGATCGGTTTGGGGATTTGCGTTCAGCTTTCCCTGTAGCTCGTGGTTTATGTCTTATAAACTCTATAGTCTGTTTTGAATGTCTTATGGGTTTTGCGCTGTAATGGTGCGACCTTTATAAACTATACAACTTTTAGCAACGGATCTCTTGGCTCTCGCATCGATGAAGAACGCAGC
+&gt;seq.3 size=2453
+CTTGGTCATTTAGAGGAAGTAAGAGAGAAATGTATAAACTCATAATTGACGAATGATAATTGTTATTGAAGTTTTTGTAAAGGGGCTTCTTTATGAATAAGGGATACACGTTTGACGATATGATTAATACCATGATGCCCCTGGCCCTTTGACGGCTCGGCAAAGGGTGAAGGAATTTACTGCACGGTCAGGCCCTCGTCGCATCGATGAAGAACGCAGC
+</code></pre></div></div>
+
+<h2 id="summing-dereplicated-outputs">Summing dereplicated outputs</h2>
+
+<p>If the input files were already dereplicated printing the “size” of the cluster, <code class="language-plaintext highlighter-rouge">derep</code> will sum the
+size values.</p>
+
+<p>This is a feature that to our knowledge is only available in SeqFu and allows to process in parallel multiple samples
+and generating a single “dereplicated file” at the end, propagating the correct cluster sizes.</p>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="../../assets/img/screenshot-derep.svg" alt="Screenshot of &quot;seqfu derep&quot;" title="SeqFu derep" /></p>
 
       </article>
       
@@ -395,15 +454,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/deinterleave/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu deinterleave</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/grep/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu grep</span>
     </a>
   
 </nav>
@@ -425,7 +484,23 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#size-values" class="toc-link">Size values</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#summing-dereplicated-outputs" class="toc-link">Summing dereplicated outputs</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

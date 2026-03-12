@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu deinterleave | SeqFu 2.0</title>
+  <meta name="description" content="Split interleaved FASTQ files into separate R1 and R2 files">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -120,8 +120,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/deinterleave/" class="sidebar-link">seqfu deinterleave</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/deinterleave/" class="sidebar-link active">seqfu deinterleave</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu deinterleave
           </li>
         
       
@@ -374,8 +374,80 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu deinterleave</h1>
+        <p><em>deinterleave</em> (or <em>dei</em>) is one of the core subprograms of <em>SeqFu</em>.
+It’s used to produce two separate FASTQ files from an interleaved file.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ilv: interleave FASTQ files
+
+  Usage: dei [options] -o basename &lt;interleaved-fastq&gt;
+
+  -o --output-basename "str"     save output to output_R1.fq and output_R2.fq
+  -f --for-ext "R1"              extension for R1 file [default: _R1.fq]
+  -r --rev-ext "R2"              extension for R2 file [default: _R2.fq]
+  -c --check                     enable careful mode (check sequence names and numbers)
+  -v --verbose                   print verbose output
+
+  -s --strip-comments            skip comments
+  -p --prefix "string"           rename sequences (append a progressive number)
+ 
+notes:
+    use "-" as input filename to read from STDIN
+
+example:
+
+    dei -o newfile file.fq
+</code></pre></div></div>
+
+<h3 id="streaming">Streaming</h3>
+
+<p>If a program produce an interleaved output, <code class="language-plaintext highlighter-rouge">seqfu deinterleave</code> can be used in a pipe (specifying “-“ as input):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fu-primers <span class="nt">-1</span> file_R1.fq <span class="nt">-2</span> file_R2.fq | seqfu deinterleave <span class="nt">-o</span> fileNoPrimers -
+</code></pre></div></div>
+
+<h2 id="what-are-interleaved-files">What are interleaved files?</h2>
+
+<p><a href="https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html">Paired end sequences</a> can be stored in two separate files 
+(usually denoted with the <strong>_R1</strong> and <strong>_R2</strong> strings) or in a single sequence where each sequence pair is 
+stored as two subsequent sequences.</p>
+
+<p>A simple example is depicted below:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=======================================================================
+File_R1.fq                File_R2.fq                Interleaved.fq
+=======================================================================
+
+
+@seq1                     @seq1                     @seq1
+TTTCATTCTGACTGCAACG       GGATTAAAAAAAGAGTGTC       TTTCATTCTGACTGCAACG
++                         +                         +
+IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+@seq2                     @seq2                     @seq1
+GTGTGGATTAAAAAAAAAA       TTTTTTTTTTTTTTTTTTT       GGATTAAAAAAAGAGTGTC
++                         +                         +
+IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII       IIIIIIIIIIIIIIIIIII
+@seq3                     @seq3                     @seq2 
+AGAGTGTCTGATAGCA          GATAGCAG                  GTGTGGATTAAAAAAAAAA
++                         +                         +
+IIIIIIIIIIIIIIII          IIIIIIII                  IIIIIIIIIIIIIIIIIII
+                                                    @seq2
+                                                    TTTTTTTTTTTTTTTTTTT
+                                                    +
+                                                    IIIIIIIIIIIIIIIIIII
+                                                    @seq3
+                                                    AGAGTGTCTGATAGCA
+                                                    +
+                                                    IIIIIIIIIIIIIIII
+                                                    @seq3
+                                                    GATAGCAG
+                                                    +
+                                                    IIIIIIII
+</code></pre></div></div>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="../../assets/img/screenshot-deinterleave.svg" alt="Screenshot of &quot;seqfu deinterleave&quot;" title="SeqFu deinterleave" /></p>
 
       </article>
       
@@ -395,15 +467,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/count/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu count</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/derep/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu derep</span>
     </a>
   
 </nav>
@@ -424,8 +496,24 @@
       
       
       
+      <li class="toc-item toc-level-3">
+        <a href="#streaming" class="toc-link">Streaming</a>
+      </li>
+    
+      
+      
+      
+      
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#what-are-interleaved-files" class="toc-link">What are interleaved files?</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

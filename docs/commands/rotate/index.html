@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu rotate | SeqFu 2.0</title>
+  <meta name="description" content="Rotate sequences to a new starting position or motif">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -216,8 +216,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/rotate/" class="sidebar-link">seqfu rotate</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/rotate/" class="sidebar-link active">seqfu rotate</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu rotate
           </li>
         
       
@@ -374,8 +374,88 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu rotate</h1>
+        <p>Rotate a sequence setting a new starting position, using 
+a new position or an oligonucleotide.</p>
+
+<p>Introduced with SeqFu 1.8.6.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sage:
+    fu-rotate [options] -i POS [&lt;fastq-file&gt;...]
+    fu-rotate [options] -m STR [&lt;fastq-file&gt;...]
+
+  Rotate the sequences of one or more sequence files using 
+  coordinates or motifs.
+
+  Position based:
+    -i, --start-pos POS        Restart from base POS, where 1 is the first base [default: 1]
+  
+  Motif based:
+    -m, --motif STR            Rotate sequences using motif STR as the new start,
+                               where STR is a string of bases
+    -s, --skip-unmached        If a motif is provided, skip sequences that do not
+                               match the motif
+    -r, --revcomp              Also scan for reverse complemented motif
+
+  Other options:
+    -v, --verbose              Verbose output
+    -h, --help                 Show this help
+</code></pre></div></div>
+
+<h2 id="examples">Examples</h2>
+
+<p>Given an input file with a single sequence:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;polyA
+ACACGTACTACTGAAAAAAAAAACTGCTACTA
+</code></pre></div></div>
+
+<h3 id="rotate-by-new-position">Rotate by new position</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu rotate <span class="nt">-i</span> 14  data/homopolymer.fa 
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;polyA
+AAAAAAAAAACTGCTACTAACACGTACTACTG
+</code></pre></div></div>
+
+<h3 id="rotate-by-oligonucleotide">Rotate by oligonucleotide</h3>
+
+<div class="admonition admonition-warning">
+  <div class="admonition-heading">
+    <span class="admonition-icon">⚠️</span>
+    <span class="admonition-title">Warning</span>
+  </div>
+  <div class="admonition-content">
+<p>rotation by oligo will only produce an output if the match is unique</p>
+  </div>
+</div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu rotate <span class="nt">-m</span> AAAAAAAAAA data/homopolymer.fa
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;polyA
+AAAAAAAAAACTGCTACTAACACGTACTACTG
+</code></pre></div></div>
+
+<h3 id="rotate-by-oligonucleotide-also-in-reverse">Rotate by oligonucleotide (also in reverse)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu rotate <span class="nt">-r</span> <span class="nt">-m</span> GTTTTTTTTTT  data/homopolymer.fa
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;polyA
+GTTTTTTTTTTCAGTAGTACGTGTTAGTAGCA
+</code></pre></div></div>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="../../assets/img/screenshot-rotate.svg" alt="Screenshot of &quot;seqfu rotate&quot;" title="SeqFu rotate" /></p>
 
       </article>
       
@@ -395,15 +475,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/rc/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu rc</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/sort/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu sort</span>
     </a>
   
 </nav>
@@ -425,7 +505,39 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#examples" class="toc-link">Examples</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#rotate-by-new-position" class="toc-link">Rotate by new position</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#rotate-by-oligonucleotide" class="toc-link">Rotate by oligonucleotide</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#rotate-by-oligonucleotide-also-in-reverse" class="toc-link">Rotate by oligonucleotide (also in reverse)</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

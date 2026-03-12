@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu rc | SeqFu 2.0</title>
+  <meta name="description" content="Print the reverse complement of sequences">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -208,8 +208,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/rc/" class="sidebar-link">seqfu rc</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/rc/" class="sidebar-link active">seqfu rc</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu rc
           </li>
         
       
@@ -374,8 +374,56 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu rc</h1>
+        <p><em>rc</em>  is one of the core subprograms of <em>SeqFu</em>, that allows 
+to print the <em>reverse complement</em> of sequences, either from
+input files or provided as strings. IUPAC DNA characters allowed.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: rc [options] [&lt;strings-or-files&gt;...] 
+
+Print the reverse complementary of sequences in files or sequences
+given as parameters
+
+Options:
+  -s, --seq-name NAME    Sequence name if coming as string [default: string]
+  --strip-comments       Remove sequence comments
+  -v, --verbose          Verbose output
+  --help                 Show this help
+</code></pre></div></div>
+
+<h2 id="reverse-complement-strings">Reverse complement strings</h2>
+
+<p>To print the reverse complement of sequence, for example of universal primers with degenerate bases:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu rc CCTACGGGNGGCWGCAG GGACTACHVGGGTATCTAATCC
+</code></pre></div></div>
+
+<p>will produce:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;string_1
+CTGCWGCCNCCCGTAGG
+&gt;string_2
+GGATTAGATACCCBDGTAGTCC
+</code></pre></div></div>
+
+<p><strong>Note</strong>: if a single sequence (string) is provided, the output is not in FASTA format but a plain string. This makes easier
+a programmatic use like:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>removePrimersScript.sh <span class="nt">--for</span> <span class="nv">$FOR</span> <span class="nt">--rev</span> <span class="si">$(</span>seqfu rc <span class="nv">$REV</span><span class="si">)</span>
+</code></pre></div></div>
+
+<h2 id="reverse-commplement-files">Reverse commplement files</h2>
+<p>When supplying input files, the whole file will be complemented. If the file is in FASTQ format the 
+quality will be reversed as well. The program can process multiple files.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu rc data/test.fasta
+</code></pre></div></div>
+
+<p>will produce:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;SEQ1_BamHI-EcoRI
+ACGTGTACCAGCTACGATCGTGTGTAGCTAGCTCGTCAGCTAGCTACGTCGATCACGTACGCTGT
+&gt;Seq2 with comm
+GTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGT
+&gt;Seq3
+GGGGGGGGGGGGGGGGGGGGG
+</code></pre></div></div>
+
 
       </article>
       
@@ -395,15 +443,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/qual/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu qual</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/rotate/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu rotate</span>
     </a>
   
 </nav>
@@ -425,7 +473,15 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#reverse-complement-strings" class="toc-link">Reverse complement strings</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#reverse-commplement-files" class="toc-link">Reverse commplement files</a>
       </li>
     
   </ul>

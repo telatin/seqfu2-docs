@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu tail | SeqFu 2.0</title>
+  <meta name="description" content="Print the last sequences from a FASTX file">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -248,8 +248,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/tail/" class="sidebar-link">seqfu tail</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/tail/" class="sidebar-link active">seqfu tail</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu tail
           </li>
         
       
@@ -374,8 +374,31 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu tail</h1>
+        <p><em>tail</em>  is one of the core subprograms of <em>SeqFu</em>.</p>
+
+<p>It will print the last sequences of a FASTX file (like GNU tail), but
+can be instructed to skip a number of sequences between each printed one.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: tail [options] [&lt;inputfile&gt; ...]
+
+Options:
+  -n, --num NUM          Print the first NUM sequences [default: 10]
+  -k, --skip SKIP        Print one sequence every SKIP [default: 0]
+  -p, --prefix STRING    Rename sequences with prefix + incremental number
+  -s, --strip-comments   Remove comments
+  -b, --basename         prepend basename to sequence name
+  --fasta                Force FASTA output
+  --fastq                Force FASTQ output
+  --sep STRING       Sequence name fields separator [default: _]
+  -q, --fastq-qual INT   FASTQ default quality [default: 33]
+  -v, --verbose          Verbose output
+  -h, --help             Show this help
+</code></pre></div></div>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="../../assets/img/screenshot-tail.svg" alt="Screenshot of &quot;seqfu tail&quot;" title="SeqFu tail" /></p>
 
       </article>
       
@@ -395,15 +418,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/tabulate/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu tabulate</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/tofasta/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu tofasta</span>
     </a>
   
 </nav>
@@ -425,7 +448,7 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BamToCov 3.0 | BamToCov 3.0</title>
-  <meta name="description" content="A suite of utilities for BAM file coverage analysis">
+  <title>SeqFu 2.0 | SeqFu 2.0</title>
+  <meta name="description" content="A suite of utilities for FASTA/FASTQ file manipulation">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/bamtocov/assets/css/main.css">
-  <link rel="icon" href="/bamtocov/assets/img/fusion-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="icon" href="./assets/img/fusion-icon.svg" type="image/svg+xml">
   <script>
-    // Apply saved theme before page renders to avoid flash
+    / Apply saved theme before page renders to avoid flash
     (function() {
       var theme = localStorage.getItem('theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -22,9 +22,9 @@
 <body>
   <header class="site-header">
   <div class="header-inner">
-    <a href="/bamtocov/" class="header-logo">
-      <img src="/bamtocov/assets/img/logo-fusion.svg" alt="Fusion" class="logo-img">
-      <span class="logo-text">BamToCov 3.0 - coverage analysis and counts from BAM files</span>
+    <a href="./" class="header-logo">
+      <img src="./assets/img/logo-fusion.svg" alt="Fusion" class="logo-img">
+      <span class="logo-text">SeqFu 2.0 - the FASTX swiss-army knife</span>
     </a>
     <div class="header-actions">
       <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
@@ -57,7 +57,7 @@
         
         
         <li class="sidebar-item active">
-          <a href="/bamtocov/" class="sidebar-link active">BamToCov 3.0</a>
+          <a href="./" class="sidebar-link active">SeqFu 2.0</a>
         </li>
       
     
@@ -65,15 +65,7 @@
         
         
         <li class="sidebar-item">
-          <a href="/bamtocov/get-started/" class="sidebar-link">Get started</a>
-        </li>
-      
-    
-      
-        
-        
-        <li class="sidebar-item">
-          <a href="/bamtocov/overview/" class="sidebar-link">Overview</a>
+          <a href="./get-started/" class="sidebar-link">Get started</a>
         </li>
       
     
@@ -97,7 +89,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/commands/bamtocov/" class="sidebar-link">BamToCov</a>
+                  <a href="./commands/bases/" class="sidebar-link">seqfu bases</a>
                 </li>
               
             
@@ -105,7 +97,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/commands/bamtocounts/" class="sidebar-link">BamToCounts</a>
+                  <a href="./commands/cat/" class="sidebar-link">seqfu cat</a>
                 </li>
               
             
@@ -113,7 +105,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/commands/bamcountrefs/" class="sidebar-link">BamCountRefs</a>
+                  <a href="./commands/check/" class="sidebar-link">seqfu check</a>
                 </li>
               
             
@@ -121,35 +113,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/commands/covtotarget/" class="sidebar-link">CovToTarget</a>
-                </li>
-              
-            
-          </ul>
-        </li>
-      
-    
-      
-        
-        
-        
-        
-        
-        
-        <li class="sidebar-category">
-          
-            <button class="sidebar-category-btn" aria-expanded="false">
-              <span>Scripts</span>
-              <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-            </button>
-          
-          <ul class="sidebar-subitems">
-            
-              
-                
-                
-                <li class="sidebar-item">
-                  <a href="/bamtocov/scripts/average-coverage/" class="sidebar-link">average-coverage.py</a>
+                  <a href="./commands/count/" class="sidebar-link">seqfu count</a>
                 </li>
               
             
@@ -157,7 +121,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/scripts/low-cov-multisample/" class="sidebar-link">low-cov-multisample.py</a>
+                  <a href="./commands/deinterleave/" class="sidebar-link">seqfu deinterleave</a>
                 </li>
               
             
@@ -165,7 +129,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/scripts/make-target-from-bam/" class="sidebar-link">make-target-from-bam.py</a>
+                  <a href="./commands/derep/" class="sidebar-link">seqfu derep</a>
                 </li>
               
             
@@ -173,7 +137,143 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/scripts/feat-counts/" class="sidebar-link">feat-counts.py</a>
+                  <a href="./commands/grep/" class="sidebar-link">seqfu grep</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/head/" class="sidebar-link">seqfu head</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/interleave/" class="sidebar-link">seqfu interleave</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/lanes/" class="sidebar-link">seqfu lanes</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/less/" class="sidebar-link">seqfu less</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/list/" class="sidebar-link">seqfu list</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/merge/" class="sidebar-link">seqfu merge</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/metadata/" class="sidebar-link">seqfu metadata</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/qual/" class="sidebar-link">seqfu qual</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/rc/" class="sidebar-link">seqfu rc</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/rotate/" class="sidebar-link">seqfu rotate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/sort/" class="sidebar-link">seqfu sort</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/stats/" class="sidebar-link">seqfu stats</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/tabulate/" class="sidebar-link">seqfu tabulate</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/tail/" class="sidebar-link">seqfu tail</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/tofasta/" class="sidebar-link">seqfu tofasta</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/trim/" class="sidebar-link">seqfu trim</a>
+                </li>
+              
+            
+              
+                
+                
+                <li class="sidebar-item">
+                  <a href="./commands/view/" class="sidebar-link">seqfu view</a>
                 </li>
               
             
@@ -185,7 +285,7 @@
         
         
         <li class="sidebar-item">
-          <a href="/bamtocov/history/" class="sidebar-link">History</a>
+          <a href="./background/" class="sidebar-link">Background</a>
         </li>
       
     
@@ -193,7 +293,7 @@
         
         
         <li class="sidebar-item">
-          <a href="/bamtocov/reference/" class="sidebar-link">Citation</a>
+          <a href="./reference/" class="sidebar-link">Citation</a>
         </li>
       
     
@@ -217,7 +317,7 @@
                 
                 
                 <li class="sidebar-item">
-                  <a href="/bamtocov/tutorial/first/" class="sidebar-link">First steps</a>
+                  <a href="./tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -229,7 +329,7 @@
         
         
         <li class="sidebar-item">
-          <a href="/bamtocov/faq/" class="sidebar-link">Frequently Asked Questions</a>
+          <a href="./faq/" class="sidebar-link">FAQ</a>
         </li>
       
     
@@ -243,36 +343,49 @@
 
 
       <article class="markdown-body">
-        <h1>BamToCov 3.0</h1>
-        <table>
+        <h1>SeqFu 2.0</h1>
+        <p><a href="https://github.com/telatin/seqfu2/actions/workflows/nim-2.yaml"><img src="https://github.com/telatin/seqfu2/actions/workflows/nim-2.yaml/badge.svg" alt="Seqfu-Nim-Build" /></a>
+<a href="https://github.com/telatin/seqfu2/releases"><img src="https://img.shields.io/github/v/release/telatin/seqfu2" alt="Latest release" /></a>
+<a href="https://anaconda.org/bioconda/seqfu"><img src="https://img.shields.io/conda/dn/bioconda/seqfu?label=Bioconda%20Downloads" alt="Bioconda Downloads" /></a></p>
+
+<table>
   <tbody>
     <tr>
-      <td>😺 <strong><a href="https://github.com/telatin/bamtocov">Repository</a></strong></td>
-      <td>📦 <strong><a href="https://github.com/telatin/bamtocov/releases">Releases</a></strong></td>
-      <td>📃 <strong><a href="https://academic.oup.com/bioinformatics/article/38/9/2617/6535233">Paper</a></strong></td>
+      <td>😺 <strong><a href="https://github.com/telatin/seqfu2">Repository</a></strong></td>
+      <td>📦 <strong><a href="https://github.com/telatin/seqfu2/releases">Releases</a></strong></td>
+      <td>📃 <strong><a href="https://www.mdpi.com/resolver?pii=bioengineering8050059">Paper</a></strong></td>
     </tr>
   </tbody>
 </table>
 
-<p><img src="/bamtocov/assets/img/bamtocov-banner.png" alt="bamtocov logo" /></p>
+<p>SeqFu is a general-purpose program to manipulate and parse information from FASTA/FASTQ files, supporting gzipped input files. It includes functions to interleave and de-interleave FASTQ files, rename sequences, and count and print statistics on sequence lengths. SeqFu is available for Linux and macOS.</p>
 
-<p>BamToCov is inspired by the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">UNIX Phylosophy</a> and the tools are designed for efficient computation
-of a very specific task. Integration of multiple samples and specific tasks can be achieved <a href="/bamtocov/scripts/">with scripts</a>
-and we provide a set to demonstrate the process.</p>
+<p><img src="./assets/img/screenshot-seqfu.png" alt="Seqfu splash" /></p>
 
-<p><strong><a href="{ _docs/commands/bamtocov.md  | relative_url}">bamtocov</a></strong> will produce a <em>coverage BED</em> from a single BAM file, or a count matrix from a set of alignments and a target (in BED, GTF or GFF format).
-Used without a target, it is a drop-in replacement for <a href="https://github.com/telatin/covtobed">covtobed</a>, but discarding invalid alignments by default.
-When providing the target, it can produce coverage statistics for each region in the target, also with multiple BAM files.</p>
+<h2 id="features">Features</h2>
 
-<p><strong><a href="{ _docs/commands/bamtocounts.md  | relative_url}">bamtocounts</a></strong> will count the number of reads covering each target region,
-rather than the nucleotidic coverage</p>
+<ul>
+  <li>A compiled program delivering high-performance analyses</li>
+  <li>Supports FASTA/FASTQ files, including gzip-compressed files</li>
+  <li>A growing collection of handy utilities for quick inspection of datasets</li>
+  <li>UNIX-like commands specific to sequences: <code class="language-plaintext highlighter-rouge">seqfu cat</code>, <code class="language-plaintext highlighter-rouge">seqfu head</code>, <code class="language-plaintext highlighter-rouge">seqfu tail</code>, <code class="language-plaintext highlighter-rouge">seqfu grep</code></li>
+  <li>Terminal-friendly reports from <code class="language-plaintext highlighter-rouge">seqfu stats</code> or <code class="language-plaintext highlighter-rouge">seqfu count</code></li>
+</ul>
 
-<p><strong><a href="{ _docs/commands/bamcountrefs.md  | relative_url}">bamcountrefs</a></strong> is a shortcut to count the number of reads per chromosome,
-with filters on the read flags, length and quality</p>
+<h2 id="quick-install">Quick install</h2>
 
-<p><strong><a href="{ _docs/commands/covtotarget.md  | relative_url}">covtotarget</a></strong> (<em>legacy</em>) is an utility to create a count table from the <em>output</em> of
-the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.</p>
+<p>Install via conda:</p>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge <span class="nt">-c</span> bioconda <span class="s2">"seqfu&gt;1.10"</span>
+</code></pre></div></div>
+
+<p>See the <a href="./get-started/">Get started</a> page for more installation options.</p>
+
+<h2 id="citation">Citation</h2>
+
+<blockquote>
+  <p>Telatin A, Fariselli P, Birolo G. <em>SeqFu: A Suite of Utilities for the Robust and Reproducible Manipulation of Sequence Files</em>. Bioengineering 2021, 8, 59. <a href="https://doi.org/10.3390/bioengineering8050059">doi.org/10.3390/bioengineering8050059</a></p>
+</blockquote>
 
       </article>
       
@@ -295,7 +408,7 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
     <span></span>
   
   
-    <a href="/bamtocov/get-started/" class="pagination-link pagination-next">
+    <a href="./get-started/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
       <span class="pagination-title">Get started</span>
     </a>
@@ -309,6 +422,37 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
 
 
 
+
+<nav class="toc" aria-label="Table of contents">
+  <h4 class="toc-title">On this page</h4>
+  <ul class="toc-list">
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#features" class="toc-link">Features</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#quick-install" class="toc-link">Quick install</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#citation" class="toc-link">Citation</a>
+      </li>
+    
+  </ul>
+</nav>
 
 
     </aside>
@@ -325,7 +469,7 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
   <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-links">
-      <a href="https://github.com/telatin/bamtocov"   target="_blank" rel="noopener">GitHub Repository</a>
+      <a href="https://github.com/telatin/seqfu2"   target="_blank" rel="noopener">GitHub Repository</a>
       <a href="https://www.quadram.ac.uk/"  target="_blank" rel="noopener">Quadram Institute Bioscience</a>
       <a href="https://telatin.github.io"  target="_blank" rel="noopener">Andrea Telatin</a>
     </div>
@@ -338,8 +482,8 @@ the original <a href="https://github.com/telatin/covtobed">covtobed</a> program.
   </div>
 </footer>
 
-  <script src="/bamtocov/assets/js/dark-mode.js"></script>
-  <script src="/bamtocov/assets/js/sidebar.js"></script>
-  <script src="/bamtocov/assets/js/toc.js"></script>
+  <script src="./assets/js/dark-mode.js"></script>
+  <script src="./assets/js/sidebar.js"></script>
+  <script src="./assets/js/toc.js"></script>
 </body>
 </html>

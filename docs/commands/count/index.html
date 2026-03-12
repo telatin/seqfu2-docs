@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu count | SeqFu 2.0</title>
+  <meta name="description" content="Count sequences in FASTA/FASTQ files with paired-end support">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -112,8 +112,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/count/" class="sidebar-link">seqfu count</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/count/" class="sidebar-link active">seqfu count</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu count
           </li>
         
       
@@ -374,8 +374,114 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu count</h1>
+        <p><em>count</em> (or <em>cnt</em>) is one of the core subprograms of <em>SeqFu</em>.
+It’s used to count the sequences in FASTA/FASTQ files, and it’s <em>paired-end</em> aware so
+it will print the count of both files in a single line, but checking that both
+files have the same number of sequences.</p>
+
+<p>In version 1.5 the program has been redesigned to parse multiple files simultaneously.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: count [options] [&lt;inputfile&gt; ...]
+
+Options:
+  -a, --abs-path         Print absolute paths
+  -b, --basename         Print only filenames
+  -u, --unpair           Print separate records for paired end files
+  -f, --for-tag R1       Forward tag [default: auto]
+  -r, --rev-tag R2       Reverse tag [default: auto]
+  -t, --threads INT      Working threads [default: 4]
+  -v, --verbose          Verbose output
+  -h, --help             Show this help
+</code></pre></div></div>
+
+<h3 id="streaming">Streaming</h3>
+
+<p>Input from stream is supported.</p>
+
+<h3 id="example-output">Example output</h3>
+
+<p>Output is a TSV text with three columns: sample name, number of reads and type (“SE” for Single End, “Paired” for Paired End)</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data/test.fastq       3  SE
+data/comments.fastq   5  SE
+data/test2.fastq      3  SE
+data/qualities.fq     5  SE
+data/illumina_1.fq.gz 7  Paired
+</code></pre></div></div>
+
+<p>In case of errors will print a warning:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: Different counts in data/longerone_R1.fq.gz and data/longerone_R2.fq.gz
+# data/longerone_R1.fq.gz: 7
+# data/longerone_R2.fq.gz: 2
+</code></pre></div></div>
+
+<h3 id="multithreading">Multithreading</h3>
+
+<p>Performance improvement measured on the <em>MiSeq SOP</em> dataset from <a href="https://mothur.org">mothur</a>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Command</th>
+      <th style="text-align: right">Mean [ms]</th>
+      <th style="text-align: right">Min [ms]</th>
+      <th style="text-align: right">Max [ms]</th>
+      <th style="text-align: right">Relative</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">seqfu count ../mothur-sop/*.fastq -t 4</code></td>
+      <td style="text-align: right">142.5 ± 5.8</td>
+      <td style="text-align: right">127.3</td>
+      <td style="text-align: right">152.3</td>
+      <td style="text-align: right">1.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">seqfu count ../mothur-sop/*.fastq -t 1</code></td>
+      <td style="text-align: right">416.5 ± 15.2</td>
+      <td style="text-align: right">397.8</td>
+      <td style="text-align: right">440.9</td>
+      <td style="text-align: right">2.92 ± 0.16</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">seqfu count-legacy ../mothur-sop/*.fastq</code></td>
+      <td style="text-align: right">539.2 ± 16.6</td>
+      <td style="text-align: right">519.6</td>
+      <td style="text-align: right">577.4</td>
+      <td style="text-align: right">3.78 ± 0.19</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="legacy-algorithm">Legacy algorithm</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: count-legacy [options] [&lt;inputfile&gt; ...]
+
+Options:
+  -a, --abs-path         Print absolute paths
+  -b, --basename         Print only filenames
+  -u, --unpair           Print separate records for paired end files
+  -f, --for-tag R1       Forward string, like _R1 [default: auto]
+  -r, --rev-tag R2       Reverse string, like _R2 [default: auto]
+  -m, --multiqc FILE     Save report in MultiQC format
+  -v, --verbose          Verbose output
+  -h, --help             Show this help
+</code></pre></div></div>
+
+<h3 id="multiqc-output">MultiQC output</h3>
+
+<p>Using the  <code class="language-plaintext highlighter-rouge">--multiqc OUTPUTFILE</code> option it’s possible to save a MultiQC compatible file (we recommend to use the <em>projectname_mqc.tsv</em> filename format).
+After coolecting all the MultiQC files in a directory, using <code class="language-plaintext highlighter-rouge">multiqc -f .</code> will generate the MultiQC report.
+MultiQC itself can be installed via Bioconda with <code class="language-plaintext highlighter-rouge">conda install -y -c bioconda multiqc</code>.</p>
+
+<p>To understand how to use MultiQC, if you never did so, check their excellent <a href="https://multiqc.info">documentation</a>.</p>
+
+<h3 id="screenshot">Screenshot</h3>
+
+<p><img src="../../assets/img/screenshot-count.svg" alt="Screenshot of &quot;seqfu count&quot;" title="SeqFu cat" /></p>
 
       </article>
       
@@ -395,15 +501,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/check/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu check</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/deinterleave/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu deinterleave</span>
     </a>
   
 </nav>
@@ -424,8 +530,48 @@
       
       
       
+      <li class="toc-item toc-level-3">
+        <a href="#streaming" class="toc-link">Streaming</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#example-output" class="toc-link">Example output</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#multithreading" class="toc-link">Multithreading</a>
+      </li>
+    
+      
+      
+      
+      
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#legacy-algorithm" class="toc-link">Legacy algorithm</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#multiqc-output" class="toc-link">MultiQC output</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

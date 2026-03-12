@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu head | SeqFu 2.0</title>
+  <meta name="description" content="Print the first sequences from a FASTX file">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -144,8 +144,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/head/" class="sidebar-link">seqfu head</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/head/" class="sidebar-link active">seqfu head</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu head
           </li>
         
       
@@ -374,8 +374,57 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu head</h1>
+        <p><em>head</em>  is one of the core subprograms of <em>SeqFu</em>.</p>
+
+<p>It will print the first sequences of a FASTX file (like GNU head), but
+can be instructed to skip a number of sequences between each printed one.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: head [options] [&lt;inputfile&gt; ...]
+
+Select a number of sequences from the beginning of a file, allowing
+to select a fraction of the reads (for example to print 100 reads,
+selecting one every 10).
+
+Options:
+  -n, --num NUM          Print the first NUM sequences [default: 10]
+  -k, --skip SKIP        Print one sequence every SKIP [default: 0]
+  -p, --prefix STRING    Rename sequences with prefix + incremental number
+  -s, --strip-comments   Remove comments
+  -b, --basename         prepend basename to sequence name
+  -v, --verbose          Verbose output
+  --quiet                Don't print warnings
+  --help                 Show this help
+
+Output:
+  --fasta                Force FASTA output
+  --fastq                Force FASTQ output
+  --sep STRING           Sequence name fields separator [default: _]
+  -q, --fastq-qual INT   FASTQ default quality [default: 33]```
+</code></pre></div></div>
+
+<h2 id="example">Example</h2>
+
+<p>By default the program prints the first 10 sequences of a file (the number
+can be changed with <code class="language-plaintext highlighter-rouge">-n</code> or <code class="language-plaintext highlighter-rouge">--num</code>).</p>
+
+<p>Sometimes to have a preview of a file we can add the <code class="language-plaintext highlighter-rouge">--skip</code> (or <code class="language-plaintext highlighter-rouge">-k</code> for short)
+parameter to take a sequence every <em>N</em>.</p>
+
+<p>The following examples shows the output of <code class="language-plaintext highlighter-rouge">seqfu head -n 10</code>, and <code class="language-plaintext highlighter-rouge">seqfu head -n 5 -k 4</code>):</p>
+
+<p><img src="../../assets/img/seqfu-head.png" alt="Example" /></p>
+
+<h2 id="input-and-output">Input and output</h2>
+
+<p><code class="language-plaintext highlighter-rouge">seqfu head</code> takes as input one ore <em>more</em> FASTA/FASTQ files (or reads from
+the standard input if no filenames are provided, or <code class="language-plaintext highlighter-rouge">-</code> is added to the list).
+The output will be in the same format as the input, unless <code class="language-plaintext highlighter-rouge">--fasta</code> or <code class="language-plaintext highlighter-rouge">--fastq</code>
+are specified to force a different output.</p>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="img/screenshot-head.svg" alt="Screenshot of &quot;seqfu head&quot;" title="SeqFu head" /></p>
 
       </article>
       
@@ -395,15 +444,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/grep/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu grep</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/interleave/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu interleave</span>
     </a>
   
 </nav>
@@ -425,7 +474,23 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#example" class="toc-link">Example</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#input-and-output" class="toc-link">Input and output</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

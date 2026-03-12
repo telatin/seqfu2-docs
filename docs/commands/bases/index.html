@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu bases | SeqFu 2.0</title>
+  <meta name="description" content="Count DNA bases and GC content in FASTA/FASTQ files">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -88,8 +88,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/bases/" class="sidebar-link">seqfu bases</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/bases/" class="sidebar-link active">seqfu bases</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu bases
           </li>
         
       
@@ -374,8 +374,79 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu bases</h1>
+        <p>Counts the number of A, C, G, T and Ns in FASTA and FASTQ files.</p>
+
+<pre><code class="language-note">Introduced in SeqFu 1.15.1 as experimental feature
+</code></pre>
+
+<p>Calculates the composition of DNA sequences</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: bases [options] [&lt;inputfile&gt; ...]
+
+Print the DNA bases, and %GC content, in the input files
+
+Options:
+  -c, --raw-counts       Print counts and not ratios
+  -t, --thousands        Print thousands separator
+  -a, --abspath          Print absolute path 
+  -b, --basename         Print the basename of the file
+  -n, --nice             Print terminal table
+  -d, --digits INT       Number of digits to print [default: 2]
+  -H, --header           Print header (auto enabled with --nice)
+  -v, --verbose          Verbose output
+  --debug                Debug output
+  --help                 Show this help
+</code></pre></div></div>
+
+<h3 id="output">Output</h3>
+
+<p>The output is a table with the following columns (<code class="language-plaintext highlighter-rouge">-H</code> to print the header):</p>
+
+<ol>
+  <li>Filename (<code class="language-plaintext highlighter-rouge">-a</code> for absolute path, <code class="language-plaintext highlighter-rouge">-b</code> for basename)</li>
+  <li>Total bases (<code class="language-plaintext highlighter-rouge">-t</code> to add thousand separator)</li>
+  <li>Ratio of <strong>A</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>C</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>G</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>T</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>N</strong> bases over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>Ratio of <strong>Other</strong> characters (either IUPAC DNA or invalid chars) over total bases (<code class="language-plaintext highlighter-rouge">-c</code> to print raw counts)</li>
+  <li>%GC ratio</li>
+  <li>Ratio of <strong>Uppercase</strong> bases over total bases (if enabled by <code class="language-plaintext highlighter-rouge">-u</code>)</li>
+</ol>
+
+<h3 id="example">Example</h3>
+
+<p>A simple example:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu bases --header data/illumina_*
+
+#Filename               Total   A       C       G       T       N       Other   %GC
+data/illumina_1.fq.gz   630     18.57   18.57   18.57   18.57   18.57   0.00    59.21
+data/illumina_2.fq.gz   630     21.43   21.43   21.43   21.43   21.43   0.00    60.48
+data/illumina_nocomm.fq 630     18.57   18.57   18.57   18.57   18.57   0.00    59.21
+</code></pre></div></div>
+
+<p>when using <code class="language-plaintext highlighter-rouge">-n</code> the output is a nice table:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────┬───────┬────────┬────────┬────────┬────────┬──────┬───────┬────────┬───────────┐
+│ File                │ Bases │ A      │ C      │ G      │ T      │ N    │ Other │ %GC    │ Uppercase │
+├─────────────────────┼───────┼────────┼────────┼────────┼────────┼──────┼───────┼────────┼───────────┤
+│ data/base_at.fa     │ 33    │ 42.42  │ 0.00   │ 0.00   │ 57.58  │ 0.00 │ 0.00  │ 0.00   │ 100.00    │
+│ data/bases_lower.fa │ 15    │ 33.33  │ 26.67  │ 20.00  │ 13.33  │ 6.67 │ 0.00  │ 46.67  │ 0.00      │
+│ data/base_c.fa      │ 5     │ 0.00   │ 100.00 │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 100.00 │ 0.00      │
+│ data/base.fa        │ 2     │ 50.00  │ 50.00  │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 50.00  │ 100.00    │
+│ data/upper-none.fa  │ 7     │ 42.86  │ 14.29  │ 28.57  │ 14.29  │ 0.00 │ 0.00  │ 42.86  │ 0.00      │
+│ data/base_t.fa      │ 5     │ 0.00   │ 0.00   │ 0.00   │ 100.00 │ 0.00 │ 0.00  │ 0.00   │ 0.00      │
+│ data/base_a.fa      │ 5     │ 100.00 │ 0.00   │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 0.00   │ 100.00    │
+│ data/upper-lower.fa │ 10    │ 50.00  │ 50.00  │ 0.00   │ 0.00   │ 0.00 │ 0.00  │ 50.00  │ 50.00     │
+│ data/base_g.fa      │ 1     │ 0.00   │ 0.00   │ 100.00 │ 0.00   │ 0.00 │ 0.00  │ 100.00 │ 100.00    │
+│ data/upper-only.fa  │ 9     │ 44.44  │ 11.11  │ 44.44  │ 0.00   │ 0.00 │ 0.00  │ 55.56  │ 100.00    │
+│ data/base_extra.fa  │ 20    │ 50.00  │ 0.00   │ 0.00   │ 0.00   │ 0.00 │ 50.00 │ 0.00   │ 100.00    │
+│ data/base_cg.fa     │ 25    │ 0.00   │ 52.00  │ 48.00  │ 0.00   │ 0.00 │ 0.00  │ 100.00 │ 100.00    │
+└─────────────────────┴───────┴────────┴────────┴────────┴────────┴──────┴───────┴────────┴───────────┘
+</code></pre></div></div>
 
       </article>
       
@@ -395,15 +466,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../get-started/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">Get started</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/cat/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu cat</span>
     </a>
   
 </nav>
@@ -424,8 +495,16 @@
       
       
       
-      <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+      <li class="toc-item toc-level-3">
+        <a href="#output" class="toc-link">Output</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-3">
+        <a href="#example" class="toc-link">Example</a>
       </li>
     
   </ul>

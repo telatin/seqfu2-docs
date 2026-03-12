@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu grep | SeqFu 2.0</title>
+  <meta name="description" content="Select sequences by name, comment, or oligonucleotide pattern">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -136,8 +136,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/grep/" class="sidebar-link">seqfu grep</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/grep/" class="sidebar-link active">seqfu grep</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu grep
           </li>
         
       
@@ -374,8 +374,79 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu grep</h1>
+        <p><em>grep</em>  is one of the core subprograms of <em>SeqFu</em>.</p>
+
+<p>It can be used to select sequences by their name, comments or
+sequence using IUPAC degenerate oligo as query.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: grep [options] [&lt;inputfile&gt; ...]
+
+Print sequences selected if they match patterns or contain oligonucleotides
+
+Options:
+  -n, --name STRING      String required in the sequence name
+  -r, --regex PATTERN    Pattern to be matched in sequence name
+  -c, --comment          Also search -n and -r in the comment
+  -f, --full             The string or pattern covers the whole name
+                         (mainly used without -c)
+  -w, --word             The string or pattern is a whole word
+                         (only effective with -c, as names do not contain spaces)
+  -i, --ignore-case      Ignore case when matching names (is already enabled with regexes)
+  -o, --oligo IUPAC      Oligonucleotide required in the sequence,
+                         using ambiguous bases and reverse complement
+  -A, --append-pos       Append matching positions to the sequence comment
+  --max-mismatches INT   Maximum mismatches allowed [default: 0]
+  --min-matches INT      Minimum number of matches [default: oligo-length]
+  -v, --verbose          Verbose output
+  --help                 Show this help
+</code></pre></div></div>
+
+<h2 id="get-sequences-by-name">Get sequences by name</h2>
+
+<p>In a sequence the name, or id, is the string before the first white space
+character, while we define as comment all the rest:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;Seq_Name_Here  after the name or ID, everything else is the comment
+ATTACAAACAGTCGATCGTAGCTAGCTAGCTGATC
+</code></pre></div></div>
+
+<p>To extract all the sequences containing “Here” in the name:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu grep -n Here file.fasta
+</code></pre></div></div>
+
+<p>If we also want to extend the search to comments we need to add the <code class="language-plaintext highlighter-rouge">-c</code> (or <code class="language-plaintext highlighter-rouge">--comment</code>) switch:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu grep -c -n extend file.fasta
+</code></pre></div></div>
+
+<p>Finally, <a href="https://www.regular-expressions.info/">regular expressions</a>
+are supported only enabling <code class="language-plaintext highlighter-rouge">-r</code> (or <code class="language-plaintext highlighter-rouge">--regex</code>):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu grep -r -n Seq_N..._ file.fasta
+</code></pre></div></div>
+
+<h2 id="matching-patterns-in-dna-sequences">Matching patterns in DNA sequences</h2>
+
+<p>A simple text search (even with regular expressions) cannot be 
+a handy way to identify matches in a DNA/RNA sequence.</p>
+
+<p>Using the <code class="language-plaintext highlighter-rouge">-o</code> (<code class="language-plaintext highlighter-rouge">--oligo</code>) parameter, we scan the sequence for matches 
+of oligonucleotides supporting <a href="https://www.bioinformatics.org/sms/iupac.html">IUPAC degenerate bases</a>,
+supporting <strong>reverse complement</strong> matches and partial matches.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;Example
+CAGATAAAA
+</code></pre></div></div>
+
+<p>if we scan for <code class="language-plaintext highlighter-rouge">TTTT</code> we will match the sequence, as it’s in the reverse complement strand:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu -o TTTT file.fasta
+</code></pre></div></div>
+
+<p>We can also use IUPAC bases (N for any base, B for C, G or A…):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu -o TTTTNT file.fasta
+</code></pre></div></div>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="../../assets/img/screenshot-grep.svg" alt="Screenshot of &quot;seqfu grep&quot;" title="SeqFu grep" /></p>
 
       </article>
       
@@ -395,15 +466,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/derep/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu derep</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/head/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu head</span>
     </a>
   
 </nav>
@@ -425,7 +496,23 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#get-sequences-by-name" class="toc-link">Get sequences by name</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#matching-patterns-in-dna-sequences" class="toc-link">Matching patterns in DNA sequences</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#screenshot" class="toc-link">Screenshot</a>
       </li>
     
   </ul>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>First steps | SeqFu 2.0</title>
-  <meta name="description" content="A first SeqFu tutorial">
+  <title>seqfu trim | SeqFu 2.0</title>
+  <meta name="description" content="Trim FASTQ sequences based on quality thresholds">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -264,8 +264,8 @@
               
                 
                 
-                <li class="sidebar-item">
-                  <a href="../../commands/trim/" class="sidebar-link">seqfu trim</a>
+                <li class="sidebar-item active">
+                  <a href="../../commands/trim/" class="sidebar-link active">seqfu trim</a>
                 </li>
               
             
@@ -304,9 +304,9 @@
         
         
         
-        <li class="sidebar-category expanded">
+        <li class="sidebar-category">
           
-            <button class="sidebar-category-btn" aria-expanded="true">
+            <button class="sidebar-category-btn" aria-expanded="false">
               <span>Tutorials</span>
               <svg class="caret" width="16" height="16" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
             </button>
@@ -316,8 +316,8 @@
               
                 
                 
-                <li class="sidebar-item active">
-                  <a href="../../tutorial/first/" class="sidebar-link active">General</a>
+                <li class="sidebar-item">
+                  <a href="../../tutorial/first/" class="sidebar-link">General</a>
                 </li>
               
             
@@ -355,7 +355,7 @@
         
           
           <li class="breadcrumb-item">
-            <a href="../../tutorial/">Tutorial</a>
+            <a href="../../commands/">Commands</a>
           </li>
         
       
@@ -364,7 +364,7 @@
         
         
           <li class="breadcrumb-item current" aria-current="page">
-            First steps
+            seqfu trim
           </li>
         
       
@@ -374,8 +374,80 @@
 
 
       <article class="markdown-body">
-        <h1>First steps</h1>
-        <h2 id="extracting-the-first-lines-of-a-file">Extracting the first lines of a file</h2>
+        <h1>seqfu trim</h1>
+        <p>The <code class="language-plaintext highlighter-rouge">trim</code> command trims FASTQ sequences from the 3’ end when quality drops below a threshold in a sliding window.</p>
+
+<h2 id="usage">Usage</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu trim [options] [&lt;inputfile&gt; ...]
+</code></pre></div></div>
+
+<h2 id="options">Options</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-w, --window-size INT</code></td>
+      <td>Window size for quality calculation</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-q, --min-avg-qual INT</code></td>
+      <td>Minimum average quality within window</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--offset INT</code></td>
+      <td>Quality offset (33 for Illumina)</td>
+      <td>33</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-o, --output FILE</code></td>
+      <td>Output filename</td>
+      <td>stdout</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-v, --verbose</code></td>
+      <td>Verbose output</td>
+      <td>off</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-h, --help</code></td>
+      <td>Show help</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="description">Description</h2>
+
+<p>This command scans the quality scores of FASTQ sequences using a sliding window of the specified size. 
+When the average quality within the window drops below the specified threshold, it trims the sequence 
+from that position, discarding all subsequent bases.</p>
+
+<p>This is useful for removing low-quality regions from the 3’ end of sequencing reads, which often 
+contain more errors as the sequencing reaction progresses.</p>
+
+<h2 id="examples">Examples</h2>
+
+<p>Trim sequences when the quality drops below 20 in a window of 5 bases:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu trim input.fastq <span class="nt">-o</span> output.fastq
+</code></pre></div></div>
+
+<p>Use a more stringent quality threshold:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu trim <span class="nt">-q</span> 25 input.fastq <span class="nt">-o</span> output.fastq
+</code></pre></div></div>
+
+<p>Change the window size:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seqfu trim <span class="nt">-w</span> 10 <span class="nt">-q</span> 20 input.fastq <span class="nt">-o</span> output.fastq
+</code></pre></div></div>
 
       </article>
       
@@ -395,15 +467,15 @@
 
 <nav class="pagination" aria-label="Page navigation">
   
-    <a href="../../reference/" class="pagination-link pagination-prev">
+    <a href="../../commands/tofasta/" class="pagination-link pagination-prev">
       <span class="pagination-label">Previous</span>
-      <span class="pagination-title">Citation</span>
+      <span class="pagination-title">seqfu tofasta</span>
     </a>
   
   
-    <a href="../../faq/" class="pagination-link pagination-next">
+    <a href="../../commands/view/" class="pagination-link pagination-next">
       <span class="pagination-label">Next</span>
-      <span class="pagination-title">FAQ</span>
+      <span class="pagination-title">seqfu view</span>
     </a>
   
 </nav>
@@ -425,7 +497,31 @@
       
       
       <li class="toc-item toc-level-2">
-        <a href="#extracting-the-first-lines-of-a-file" class="toc-link">Extracting the first lines of a file</a>
+        <a href="#usage" class="toc-link">Usage</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#options" class="toc-link">Options</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#description" class="toc-link">Description</a>
+      </li>
+    
+      
+      
+      
+      
+      <li class="toc-item toc-level-2">
+        <a href="#examples" class="toc-link">Examples</a>
       </li>
     
   </ul>
